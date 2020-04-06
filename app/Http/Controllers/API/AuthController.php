@@ -22,9 +22,9 @@ class AuthController extends ResponseController
         ]);
 
         if($validator->fails()){
-            if($validator->errors()->first()== "The email has already been taken.")
-             $message="EMAIL EXIST";
-            return $this->sendError($message);       
+            if($validator->errors()->first()== "The email has already been taken."){
+              return $this->sendError("EMAIL EXIST");
+            }      
         }
 
         $input = $request->all();
