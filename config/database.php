@@ -51,7 +51,7 @@ return [
             'database' => env('DB_DATABASE', 'iterview'),
             'username' => env('DB_USERNAME', 'iterview'),
             'password' => env('DB_PASSWORD', 'MehdiBenka1998'),
-            'unix_socket' => env('DB_SOCKET', 'MehdiBenka1998'),
+            'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
