@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             'name'     => 'admin name',
             'email'    => 'iterview@admin.com',
             'role'     => 'admin',
-            'password' => Hash::make('password')
+            'password' => bcrypt('password')
         ]);
     }
 }
