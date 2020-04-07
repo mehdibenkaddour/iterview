@@ -92,10 +92,11 @@ $(document).ready(function () {
                           {{$user->role}}
                         </td>
                         <td>
-                          <a href="/user-edit/{{ $user->id}}" class="btn btn-success">EDIT</a>
+                          <a href="{{ route('users.edit', ['id' => $user->id])}}" class="btn btn-success">Edit</a>
                         </td>
                         <td class="text-right">
-                          <button type="button" class="btn btn-danger delete-user" data-toggle="modal" data-target="#exampleModal" data-id="{{$user->id}}" data-url="{{url('user-delete',$user->id)}}">DELETE</button>
+                          <a href="{{ route('users.delete', ['id' => $user->id])}}" class="btn btn-danger">Delete</a>
+                          {{-- <button type="button" class="btn btn-danger delete-user" data-toggle="modal" data-target="#exampleModal" data-id="{{$user->id}}" data-url="{{url('user-delete',$user->id)}}">DELETE</button> --}}
                         </td>
                       </tr>
 
@@ -114,7 +115,7 @@ $(document).ready(function () {
                           {{$user->role}}
                         </td>
                         <td>
-                          <a href="/user-edit/{{ $user->id}}" class="btn btn-success">EDIT</a>
+                          <a href="{{ route('users.edit', ['id' => $user->id])}}" class="btn btn-success">EDIT</a>
                         </td>
                         <td class="text-right">
                         </td>

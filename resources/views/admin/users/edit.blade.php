@@ -11,10 +11,10 @@ Admin-Panel
    <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-            <h3>Edite your user</h3>
+            <h3>Edit user information</h3>
         </div>
         <div class="card-body">
-          <form action="/user-update/{{$user->id}}" method="POST">
+          <form action="{{ route('users.update', ['id' => $user->id])}}" method="POST">
           {{csrf_field()}}
           {{method_field('PUT')}}
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -26,9 +26,9 @@ Admin-Panel
                 <input type="email" name="email" value="{{$user->email}}" class="form-control">
                 <div class="col-md-6">
                 @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                    <span class="help-block">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
                 @endif
                 </div>
             </div>
@@ -45,7 +45,7 @@ Admin-Panel
                 </select>
             </div>
             <button type="submit" class="btn btn-success">Update</button>
-            <a href="/users-list" class="btn btn-danger">Cancel</a>
+            <a href="/users" class="btn btn-danger">Cancel</a>
           </form>
         </div>
       </div>
