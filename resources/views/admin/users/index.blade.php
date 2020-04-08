@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('section-title')
-Iterview
+ITerview
 @endsection
 
 @section('content')

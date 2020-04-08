@@ -8,7 +8,7 @@
   <meta name="author" content="Creative Tim">
   <title>ITerview - Administration area</title>
   <!-- Favicon -->
-  <link rel="icon" href="{{ asset('img/brand/favicon.png') }}" type="image/png">
+  <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
   <!-- Icons -->
@@ -26,7 +26,7 @@
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
         <a class="navbar-brand" href="javascript:void(0)">
-          <img src="{{ asset('img/brand/blue.png') }}" class="navbar-brand-img" alt="...">
+          <img src="{{ asset('img/logo_full.svg') }}" class="navbar-brand-img" alt="...">
         </a>
       </div>
       <div class="navbar-inner">
