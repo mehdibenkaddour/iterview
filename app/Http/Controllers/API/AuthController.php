@@ -22,8 +22,8 @@ class AuthController extends ResponseController
         ]);
 
         if($validator->fails()){
-            if($validator->errors()->first()== "The email has already been taken."){
-              return $this->sendError("EMAIL EXIST");
+            if($validator->errors()->first() == "The email has already been taken."){
+              return $this->sendError("EMAIL_EXISTS");
             }      
         }
 
@@ -61,10 +61,10 @@ class AuthController extends ResponseController
         $credentials = request(['email', 'password']);
         if(!Auth::attempt($credentials)){
             if(User::where('email','=',$request->input('email'))->exists()){
-                return $this->sendError("WRONG PASSWORD", 401);
+                return $this->sendError("INVALID_PASSWORD", 401);
             }
             else{
-                return $this->sendError("WRONG EMAIL", 401);
+                return $this->sendError("EMAIL_NOT_FOUND", 401);
             }
         }
         $user = $request->user();
