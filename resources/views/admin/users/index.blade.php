@@ -6,7 +6,90 @@ ITerview
 
 @section('content')
 
-@include('admin.helpers.modal')
+<!-- Delete Modal Component -->
+
+@component('admin.helpers.modal')
+    @slot('title')
+        Delete alert
+    @endslot
+    
+    @slot('modalId')
+        delete-modal
+    @endslot
+
+    @slot('formId')
+        delete-form
+    @endslot
+
+    @slot('method')
+        DELETE
+    @endslot
+
+    @slot('content')
+    Are you sure you wan't to delete this user
+    @endslot
+
+    @slot('cancel')
+        Cancel
+    @endslot
+
+    @slot('confirm')
+        Yes, delete
+    @endslot
+@endcomponent
+
+
+<!-- Edit Modal Component -->
+
+@component('admin.helpers.modal')
+    @slot('title')
+    Edit user
+    @endslot
+
+    @slot('modalId')
+    edit-modal
+    @endslot
+
+    @slot('formId')
+        edit-form
+    @endslot
+
+    @slot('method')
+        PUT
+    @endslot
+
+    @slot('content')
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="username" value="" class="form-control" id="name">
+      </div>
+      
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" value="" class="form-control" id="email">
+        <div class="col-md-6">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Role</label>
+        <select name="usertype" class="form-control" id="role">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+    @endslot
+
+    @slot('cancel')
+        Cancel
+    @endslot
+
+    @slot('confirm')
+        Update
+    @endslot
+
+@endcomponent
+
 
 <div class="card">
   <!-- Card header -->
@@ -42,13 +125,12 @@ ITerview
             {{ $user->role }}
           </td>
           <td>
-            <a href="{{ route('users.edit', ['id' => $user->id])}}" class="btn btn-success btn-sm">Edit</a>
-            <a
+            <button
               data-id="{{ $user->id }}"
-              {{-- onclick="event.preventDefault(); document.getElementById('delete-form').submit();" --}}
-              {{-- href="{{ route('users.delete', ['id' => $user->id]) }}"  --}}
-              href="#"
-              class="btn btn-danger btn-sm delete">Delete</a>
+              class="btn btn-success btn-sm edit">Edit</button>
+            <button
+              data-id="{{ $user->id }}"
+              class="btn btn-danger btn-sm delete">Delete</button>
           </td>
         </tr>
         @endforeach
@@ -68,6 +150,7 @@ ITerview
 @section('scripts')
 <script>
 $(document).ready(function() {
+  // DELETE A USER
   $('.delete').on('click', function() {
     // get user id
     const userId = $(this).data('id');
@@ -76,8 +159,31 @@ $(document).ready(function() {
     $('#delete-form').attr('action', '/users/delete/' + userId)
 
     // show the modal
-    $('#deleteModal').modal('show');
-  })
+    $('#delete-modal').modal('show');
+  });
+
+  // EDIT A USER
+  $('.edit').on('click', function() {
+    // get user id
+    const userId = $(this).data('id');
+
+    // set action
+    $('#edit-form').attr('action', '/users/update/' + userId);
+
+    // fill inputs with data
+    const name = $(this).parent().siblings('td')[0].innerText;
+    const email = $(this).parent().siblings('td')[1].innerText;
+    const role = $(this).parent().siblings('td')[2].innerText;
+
+    $('#name').val(name);
+    $('#email').val(email);
+
+    $('#role').get(0).selectedIndex = (role === 'admin' ? 1 : 0)
+
+    // show the modal
+    $('#edit-modal').modal('show');
+
+  });
 });
 </script>
 @endsection
