@@ -89,39 +89,6 @@ ITerview
     @endslot
 
 @endcomponent
-{{-- @section('modal-form-title', 'Edit user')
-
-@section('modal-form-id', 'edit-form')
-
-@section('modal-form-method', 'PUT')
-
-@section('modal-form-content')
-
-<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-  <label>Name</label>
-  <input type="text" name="username" value="" class="form-control">
-</div>
-
-<div class="form-group">
-  <label>Email</label>
-  <input type="email" name="email" value="" class="form-control">
-  <div class="col-md-6">
-  </div>
-</div>
-
-<div class="form-group">
-  <label>Role</label>
-  <select name="usertype" class="form-control">
-    <option value="user">User</option>
-    <option value="admin">Admin</option>
-  </select>
-</div>
-@endsection
-
-@section('modal-form-cancel', 'Cancel')
-
-@section('modal-form-confirm', 'Update') --}}
-<!-- End Edit User Modal -->
 
 
 <div class="card">
