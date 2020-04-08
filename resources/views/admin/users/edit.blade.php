@@ -51,7 +51,6 @@ Admin-Panel
       </div>
    </div>
  </div>
-
 </div>
 
 @stop

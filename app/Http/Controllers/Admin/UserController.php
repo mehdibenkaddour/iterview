@@ -29,7 +29,7 @@ class UserController extends Controller
 
         $user->update();
 
-        return redirect('/users')->with('status','Your user is updated');
+        return redirect('/users')->with('status','User has been updated with success');
     }
 
     public function delete(Request $request,$id){
@@ -37,6 +37,6 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect('/users')->with('status','User has been removed with success !');
+        return redirect('/users')->with('status','User has been removed with success');
     }
 }
