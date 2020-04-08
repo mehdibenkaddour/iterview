@@ -24,6 +24,6 @@ Route::group(['middleware' => ['auth','admin']], function () {
     })->name('admin');
     Route::get('/users','Admin\UserController@index')->name('users');
     Route::get('/users/edit/{id}','Admin\UserController@edit')->name('users.edit');
-    Route::put('/users/{id}','Admin\UserController@update')->name('users.update');
+    Route::put('/users/update/{id}','Admin\UserController@update')->name('users.update');
     Route::delete('/users/delete/{id}','Admin\UserController@delete')->name('users.delete');
 });

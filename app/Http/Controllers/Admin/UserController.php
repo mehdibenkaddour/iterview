@@ -13,13 +13,13 @@ class UserController extends Controller
         return View('admin.users.index')->with('users',$users);
     }
 
-    public function edit(Request $request,$id){
-        $user = User::findOrFail($id);
+    // public function edit(Request $request,$id){
+    //     $user = User::findOrFail($id);
 
-        return view('admin.users.edit')->with('user',$user);
-    }
+    //     return view('admin.users.edit')->with('user',$user);
+    // }
 
-    public function update(Request $request,$id){
+    public function update(Request $request, $id){
         $user=User::find($id);
 
         $user->name= $request->input('username');

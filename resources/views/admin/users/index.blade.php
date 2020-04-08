@@ -168,7 +168,7 @@ $(document).ready(function() {
     const userId = $(this).data('id');
 
     // set action
-    $('#edit-form').attr('action', '/users/edit/' + userId);
+    $('#edit-form').attr('action', '/users/update/' + userId);
 
     // fill inputs with data
     const name = $(this).parent().siblings('td')[0].innerText;
