@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     public function index(){
-        $users = User::orderBy('id')->get();
-
+        $users = User::orderBy('id')->paginate(8);
         return View('admin.users.index')->with('users',$users);
     }
 

@@ -1,11 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use App\User;
 
-class UsersTableSeeder extends Seeder
+class UsersTableDataSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,5 +18,12 @@ class UsersTableSeeder extends Seeder
             'role'     => 'admin',
             'password' => bcrypt('password')
         ]);
+        for ($i=0; $i < 100; $i++) { 
+	    	User::create([
+	            'name' => str_random(8),
+	            'email' => str_random(12).'@mail.com',
+	            'password' => bcrypt('123456')
+	        ]);
+    	}
     }
 }
