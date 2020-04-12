@@ -5,6 +5,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -20,9 +21,19 @@ class UserController extends Controller
     // }
 
     public function update(Request $request, $id){
-        $user=User::find($id);
+        $user=User::findOrfail($id);
 
-        $user->name= $request->input('username');
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255',Rule::unique('users')->ignore($user->id)],
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()]);
+        }
+
+        $user->name= $request->input('name');
         $user->email=$request->input('email');
         $user->role=$request->input('usertype');
 
@@ -31,7 +42,7 @@ class UserController extends Controller
         return redirect('users')->with('status','User has been updated with success');
     }
 
-    public function delete(Request $request,$id){
+    public function destroy(Request $request,$id){
         $user=User::findOrFail($id);
 
         $user->delete();

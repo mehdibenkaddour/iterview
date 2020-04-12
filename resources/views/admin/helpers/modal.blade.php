@@ -10,15 +10,14 @@
         </div>
         @yield('modal-content')
         <form id="{{ $formId }}" action="" method="POST">
-            <input type="hidden" name="_method" value="{{ $method }}">
-            @csrf
-        
+        <input type="hidden" name="_method" value="{{ $method }}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <div class="modal-body">
             {{ $content }}
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ $cancel }}</button>
-            <button type="submit" class="btn btn-danger">{{ $confirm }}</button>
+            <button type="submit" class="btn btn-danger" id="ajaxSubmit">{{ $confirm }}</button>
           </div>
         </form>
       </div>
