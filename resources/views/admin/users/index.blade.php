@@ -63,16 +63,16 @@ ITerview
         <label>Name</label>
         <input type="text" name="name" value="" class="form-control" id="name">
         <span class="text-danger">
-                                <strong id="name-error"></strong>
-                            </span>
+          <strong id="name-error"></strong>
+        </span>
       </div>
       
       <div class="form-group">
         <label>Email</label>
         <input type="email" name="email" value="" class="form-control" id="email">
         <span class="text-danger">
-                                <strong id="email-error"></strong>
-                            </span>
+            <strong id="email-error"></strong>
+        </span>
         
       </div>
       
@@ -194,33 +194,34 @@ $(document).ready(function() {
     $('#edit-form').submit(function(e){
       const urlForm= $(this).attr('action');
       e.preventDefault();
+      
       $.ajax({
-                  headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                  url: urlForm,
-                  method: 'POST',
-                  data: {
-                     name: jQuery('#name').val(),
-                     email: jQuery('#email').val(),
-                     usertype: jQuery('#role').val(),
-                     _method:'PUT',
-                  },
-                  success: function(result){
-                  	if(result.errors)
-                  	{
-                      if(result.errors.name && result.errors.email){
-                          $('#edit-form').find('#name-error').html(result.errors.name[0]);
-                        }else if(result.errors.email){
-                          $('#edit-form').find('#email-error').html(result.errors.email[0]);
-                        }else{
-                          $('#edit-form').find('#name-error').html(result.errors.name[0]);
-                        }
-                  	}
-                  	else
-                  	{
-                  		$('#edit-modal').modal('hide');
-                      location.reload();
-                  	}
-                  }});
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: urlForm,
+        method: 'POST',
+        data: {
+            name: jQuery('#name').val(),
+            email: jQuery('#email').val(),
+            usertype: jQuery('#role').val(),
+            _method:'PUT',
+        },
+        success: function(result){
+          if(result.errors)
+          {
+            if(result.errors.name && result.errors.email){
+                $('#edit-form').find('#name-error').html(result.errors.name[0]);
+              }else if(result.errors.email){
+                $('#edit-form').find('#email-error').html(result.errors.email[0]);
+              }else{
+                $('#edit-form').find('#name-error').html(result.errors.name[0]);
+              }
+          }
+          else
+          {
+            $('#edit-modal').modal('hide');
+            location.reload(true);
+          }
+        }});
 
     })
 
