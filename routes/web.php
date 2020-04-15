@@ -32,4 +32,7 @@ Route::group(['middleware' => ['auth','admin']], function () {
     ])->parameters(
         ['users' => 'id'
     ]);
+    Route::resource('topics','Admin\TopicController')->parameters(
+        ['topics' => 'id']
+    );
 });

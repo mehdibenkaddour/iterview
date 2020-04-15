@@ -39,7 +39,7 @@ class UserController extends Controller
 
         $user->update();
 
-        return redirect('users')->with('status','User has been updated with success');
+        return response()->json(['alert' => 'User has been updated with success']);
     }
 
     public function destroy(Request $request,$id){
