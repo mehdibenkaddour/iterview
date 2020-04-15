@@ -219,7 +219,8 @@ $(document).ready(function() {
           else
           {
             $('#edit-modal').modal('hide');
-            location.reload(true);
+            $('#alert-message').removeClass('d-none').html(result.alert);
+            setTimeout(location.reload.bind(location), 500);
           }
         }});
 
