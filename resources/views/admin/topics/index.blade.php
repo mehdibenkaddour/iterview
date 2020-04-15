@@ -212,7 +212,7 @@ $(document).ready(function() {
     const topicId = $(this).data('id');
 
     // set action
-    $('#edit-form').attr('action', '{{ url("/topics/update") }}' + "/" + topicId);
+    $('#edit-form').attr('action', '{{ url("/topics") }}' + "/" + topicId);
 
     // fill inputs with data
     const label = $(this).parent().siblings('td').first().find('span')[0].innerHTML;
