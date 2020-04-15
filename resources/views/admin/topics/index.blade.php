@@ -212,7 +212,7 @@ $(document).ready(function() {
     const topicId = $(this).data('id');
 
     // set action
-    $('#edit-form').attr('action', '/topics/' + topicId);
+    $('#edit-form').attr('action', '{{ url("/topics/update") }}' + "/" + topicId);
 
     // fill inputs with data
     const label = $(this).parent().siblings('td').first().find('span')[0].innerHTML;
@@ -267,7 +267,7 @@ $(document).ready(function() {
   // ADD TOPIC
     $('.add').on('click', function() {
     // set action
-    $('#add-form').attr('action', '/topics/');
+    $('#add-form').attr('action', '{{ route("topics.store") }}');
 
     $( '#add-label-error' ).html( "" );
     $( '#add-image-error' ).html( "" );
@@ -286,30 +286,30 @@ $(document).ready(function() {
       form.append('label', label);
       form.append('image', image);
       $.ajax({
-                  headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                  url: urlForm,
-                  method: 'POST',
-                  data: form,
-                  contentType: false,
-                  processData: false,
-                  success: function(result){
-                  	if(result.errors)
-                  	{
-                      if(result.errors.label && result.errors.image){
-                          $('#add-form').find('#add-label-error').html(result.errors.label[0]);
-                        }else if(result.errors.image){
-                          $('#add-form').find('#add-image-error').html(result.errors.image[0]);
-                        }else{
-                          $('#add-form').find('#add-label-error').html(result.errors.label[0]);
-                        }
-                  	}
-                  	else
-                  	{
-                  		$('#add-modal').modal('hide');
-                      $('#alert-message').removeClass('d-none').html(result.alert);
-                      setTimeout(location.reload.bind(location), 500);
-                  	}
-                  }});
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: urlForm,
+        method: 'POST',
+        data: form,
+        contentType: false,
+        processData: false,
+        success: function(result){
+          if(result.errors)
+          {
+            if(result.errors.label && result.errors.image){
+                $('#add-form').find('#add-label-error').html(result.errors.label[0]);
+              }else if(result.errors.image){
+                $('#add-form').find('#add-image-error').html(result.errors.image[0]);
+              }else{
+                $('#add-form').find('#add-label-error').html(result.errors.label[0]);
+              }
+          }
+          else
+          {
+            $('#add-modal').modal('hide');
+            $('#alert-message').removeClass('d-none').html(result.alert);
+            setTimeout(location.reload.bind(location), 500);
+          }
+        }});
 
     });
 

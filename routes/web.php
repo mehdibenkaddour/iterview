@@ -23,8 +23,8 @@ Route::group(['middleware' => ['auth','admin']], function () {
         return view('admin.index');
     })->name('admin');
     Route::resource('users','Admin\UserController',['names' => [
-        'index' => 'users',
-        'update' => 'users.update',
+        'index'   => 'users',
+        'update'  => 'users.update',
         'destroy' => 'users.delete'
         ],'only'=> [
             'index','update','destroy'
