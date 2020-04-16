@@ -15,7 +15,7 @@ class TopicController extends ResponseController
      */
     public function index()
     {
-        return $this->sendResponse(Topic::All());
+        return $this->sendResponse(Topic::withCount('sections')->get());
     }
 
     /**
