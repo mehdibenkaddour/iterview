@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
 use App\Models\Topic;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class TopicController extends ResponseController
+class SectionController extends ResponseController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class TopicController extends ResponseController
      */
     public function index()
     {
-        return $this->sendResponse(Topic::All());
+        return $this->sendResponse(Section::All());
     }
 
     /**
@@ -36,7 +36,7 @@ class TopicController extends ResponseController
      */
     public function store(Request $request)
     {
-        
+        //
     }
 
     /**
@@ -47,9 +47,9 @@ class TopicController extends ResponseController
      */
     public function show($id)
     {
-        $topic = Topic::withCount('sections')->find($id);
-        if($topic){
-            return $this->sendResponse($topic);
+        if(Topic::find($id)->sections){
+
+            return $this->sendResponse(Topic::find($id)->sections);
         }else{
             return $this->sendError("ressource not found",404);
         }

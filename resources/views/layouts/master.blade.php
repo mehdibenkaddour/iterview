@@ -54,7 +54,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link {{ 'sections' == request()->path() ? 'active' : ''}}" href="{{route('sections.index')}}">
                 <i class="ni ni-single-02 text-yellow"></i>
                 <span class="nav-link-text">Sections</span>
               </a>
