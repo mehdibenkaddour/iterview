@@ -14,4 +14,8 @@ class Topic extends Model
     protected $fillable = [
         'label', 'image',
     ];
+    public function sections()
+    {
+        return $this->hasMany('App\Models\Section');
+    }
 }

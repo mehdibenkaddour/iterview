@@ -23,8 +23,8 @@ Route::group(['middleware' => ['auth','admin']], function () {
         return view('admin.index');
     })->name('admin');
     Route::resource('users','Admin\UserController',['names' => [
-        'index'   => 'users',
-        'update'  => 'users.update',
+        'index' => 'users',
+        'update' => 'users.update',
         'destroy' => 'users.delete'
         ],'only'=> [
             'index','update','destroy'
@@ -34,5 +34,8 @@ Route::group(['middleware' => ['auth','admin']], function () {
     ]);
     Route::resource('topics','Admin\TopicController')->parameters(
         ['topics' => 'id']
+    );
+    Route::resource('sections','Admin\SectionController')->parameters(
+        ['sections' => 'id']
     );
 });

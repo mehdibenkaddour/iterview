@@ -28,7 +28,13 @@ Route::group([ 'prefix' => 'v1/user'], function (){
 }); 
 Route::group([ 'prefix' => 'v1/topics'], function (){ 
     Route::group(['middleware' => ['auth:api']], function () {
-        Route::post('', 'API\TopicController@index');
-        Route::post('/{id}', 'API\TopicController@show');
+        Route::get('', 'API\TopicController@index');
+        Route::get('/{id}', 'API\TopicController@show');
+        Route::get('/{id}/sections','API\SectionController@show');
+    });
+});
+Route::group([ 'prefix' => 'v1/sections'], function (){ 
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('', 'API\SectionController@index');
     });
 });
