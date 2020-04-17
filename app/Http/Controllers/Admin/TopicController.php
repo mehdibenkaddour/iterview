@@ -51,18 +51,24 @@ class TopicController extends Controller
         $topic = new Topic();
 
         $topic->label=$request->input('label');
-        if($request->hasfile('image')){
+
+        if($request->hasfile('image')) {
             $file=$request->file('image');
             $extension=$file->getClientOriginalExtension();
             $filename=time() . '.' . $extension;
             $file->move('uploads/topics/',$filename);
             $topic->image=$filename;
-        }
-        else{
+
+        } else {
             return $request;
             $topic->image="default_image";
         }
+        
         $topic->save();
+
+        // flash the session
+        $request->session()->flash('status', 'Topic has been added with success');
+
         return response()->json(['alert' => 'Topic has been added with success']);
 
     }

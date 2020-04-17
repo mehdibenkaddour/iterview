@@ -1,0 +1,25 @@
+.previous .page-link,
+.next .page-link {
+    width: auto;
+    height: 36px;
+    border-radius: 20px !important;
+    padding: 0 1rem;
+}
+
+#myTable_wrapper > div:last-child {
+    padding: 10px 0 20px 0;
+}
+
+.sorting_desc:after,
+.sorting_desc:before,
+.sorting_asc:after,
+.sorting_asc:before,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting:after {
+    font-size: 14px;
+}
+
+.table .thead-light th {
+    color: #000810;
+    background-color: #f6f9fc;
+}

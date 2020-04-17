@@ -33,6 +33,10 @@ ITerview
     @slot('confirm')
     Yes, delete
     @endslot
+
+    @slot('submitId')
+    deleteBtn
+    @endslot
 @endcomponent
 
 
@@ -83,6 +87,10 @@ ITerview
         Update
     @endslot
 
+    @slot('submitId')
+    editBtn
+    @endslot
+
 @endcomponent
 
 <!-- ADD Modal Component -->
@@ -130,6 +138,10 @@ ITerview
 
     @slot('confirm')
         Add
+    @endslot
+
+    @slot('submitId')
+    addBtn
     @endslot
 
 @endcomponent
@@ -224,42 +236,62 @@ $(document).ready(function() {
     // show the modal
     $('#edit-modal').modal('show');
 
-    $('#edit-form').submit(function(e){
-      const urlForm= $(this).attr('action');
+    $('#edit-form').submit(function(e) {
       e.preventDefault();
+      
+      // turn button into loading state
+      $('#editBtn').prop('disabled', true);
+      $('#editBtn').html(
+        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+      );
+
+      const urlForm= $(this).attr('action');
+
       $( '#edit-label-error' ).html( "" );
       $( '#edit-image-error' ).html( "" );
+
       var label = $('#edit-label').val();
       var image = $('#edit-image')[0].files[0];
+
       var form = new FormData();
+
       form.append('label', label);
       form.append('image', image);
       form.append('_method','PUT');
+
       $.ajax({
-                  headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                  url: urlForm,
-                  method: 'POST',
-                  data: form,
-                  contentType: false,
-                  processData: false,
-                  success: function(result){
-                  	if(result.errors)
-                  	{
-                      if(result.errors.label && result.errors.image){
-                          $('#edit-form').find('#edit-label-error').html(result.errors.label[0]);
-                        }else if(result.errors.image){
-                          $('#edit-form').find('#edit-image-error').html(result.errors.image[0]);
-                        }else{
-                          $('#edit-form').find('#edit-label-error').html(result.errors.label[0]);
-                        }
-                  	}
-                  	else
-                  	{
-                  		$('#edit-modal').modal('hide');
-                      $('#alert-message').removeClass('d-none').html(result.alert);
-                      setTimeout(location.reload.bind(location), 500);
-                  	}
-                  }});
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: urlForm,
+        method: 'POST',
+        data: form,
+        contentType: false,
+        processData: false,
+
+        success: function(result) {
+
+          if(result.errors) {
+            if(result.errors.label && result.errors.image) {
+              $('#edit-form').find('#edit-label-error').html(result.errors.label[0]);
+            } else if(result.errors.image){
+              $('#edit-form').find('#edit-image-error').html(result.errors.image[0]);
+            } else{
+              $('#edit-form').find('#edit-label-error').html(result.errors.label[0]);
+            }
+
+
+          } else {
+            // turn button into loading state
+            $('#editBtn').prop('disabled', true);
+            $('#editBtn').html(
+              `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+            );
+            // $('#edit-modal').modal('hide');
+            // $('#alert-message').removeClass('d-none').html(result.alert);
+            setTimeout(function() {
+              location.reload();
+            }, 2000);
+          }
+        }});
 
     });
 

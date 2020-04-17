@@ -16,8 +16,18 @@
   <link rel="stylesheet" href="{{ asset('vendor/nucleo/css/nucleo.css') }}" type="text/css">
   <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" type="text/css">
   <!-- Page plugins -->
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css">
+
   <!-- Argon CSS -->
   <link rel="stylesheet" href="{{ asset('css/argon.css?v=1.2.0') }}" type="text/css">
+
+  <!-- Datatable CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css">
 </head>
 
 <body>
@@ -328,7 +338,6 @@
     <div class="header bg-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
-          @include('admin.helpers.messages')
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
               <h6 class="h2 text-white d-inline-block mb-0">
@@ -427,6 +436,8 @@
               </div>
             </div>
           </div> --}}
+          <!-- Toast -->
+          @include('admin.helpers.messages')
         </div>
       </div>
     </div>
@@ -434,6 +445,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col">
+
           @yield('content')
         </div>
       </div>
@@ -459,13 +471,17 @@
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
-  <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+  {{-- <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script> --}}
+  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+
   <script src="{{ asset('vendor/js-cookie/js.cookie.js') }}"></script>
   <script src="{{ asset('vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
   <script src="{{ asset('vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
 
   <!-- Argon JS -->
   <script src="{{ asset('js/argon.js?v=1.2.0') }}"></script>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
 
   <!-- Custom scripts -->
   @yield('scripts')

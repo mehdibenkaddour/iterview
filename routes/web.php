@@ -22,6 +22,10 @@ Route::group(['middleware' => ['auth','admin']], function () {
     Route::get('/admin', function(){
         return view('admin.index');
     })->name('admin');
+    
+    // This route is for ajax
+    Route::get('/ajax/users', 'Admin\UserController@users')->name('ajax.users');
+    
     Route::resource('users','Admin\UserController',['names' => [
         'index' => 'users',
         'update' => 'users.update',

@@ -17,7 +17,9 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ $cancel }}</button>
-            <button type="submit" class="btn btn-danger" id="ajaxSubmit">{{ $confirm }}</button>
+            <button type="submit" class="btn btn-danger" id="{{ $submitId }}">
+              {{ $confirm }}
+            </button>
           </div>
         </form>
       </div>

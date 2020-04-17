@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Yajra\Datatables\Datatables;
 
 class UserController extends Controller
 {
     public function index(){
-        $users = User::orderBy('id')->paginate(8);
-        return View('admin.users.index')->with('users',$users);
+        // $users = User::orderBy('id')->paginate(8);
+        // $users = User::all();
+        return View('admin.users.index');
     }
 
     // public function edit(Request $request,$id){
@@ -19,6 +21,26 @@ class UserController extends Controller
 
     //     return view('admin.users.edit')->with('user',$user);
     // }
+
+    /**
+     * This method is for ajax only
+     */
+    public function users() {
+        return Datatables::of(User::query())
+        ->addColumn('actions', function (User $user) {
+            return '
+            <button
+                data-id="' . $user->id . '"
+                class="btn btn-success btn-sm edit">Edit</button>
+            <button
+                data-id="' . $user->id .'"
+                class="btn btn-danger btn-sm delete">Delete</button>';
+        })
+        
+        ->rawColumns(['actions'])
+
+        ->toJson();
+    }
 
     public function update(Request $request, $id){
         $user=User::findOrfail($id);
