@@ -11,22 +11,17 @@ use Yajra\Datatables\Datatables;
 class UserController extends Controller
 {
     public function index(){
-        // $users = User::orderBy('id')->paginate(8);
-        // $users = User::all();
+        // no need to pass users only return the view
         return View('admin.users.index');
     }
-
-    // public function edit(Request $request,$id){
-    //     $user = User::findOrFail($id);
-
-    //     return view('admin.users.edit')->with('user',$user);
-    // }
 
     /**
      * This method is for ajax only
      */
-    public function users() {
+    public function ajaxUsers() {
         return Datatables::of(User::query())
+
+        // add actions collumn
         ->addColumn('actions', function (User $user) {
             return '
             <button
@@ -37,6 +32,7 @@ class UserController extends Controller
                 class="btn btn-danger btn-sm delete">Delete</button>';
         })
         
+        // to interpret html and not considering it as text
         ->rawColumns(['actions'])
 
         ->toJson();

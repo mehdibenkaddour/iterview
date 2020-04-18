@@ -53,19 +53,19 @@
             </li>
             <li class="nav-item">
               <a class="nav-link {{ 'users' == request()->path() ? 'active' : ''}}" href="{{ route('users') }}">
-                <i class="ni ni-planet text-orange"></i>
+                <i class="ni ni-single-02 text-orange"></i>
                 <span class="nav-link-text">App users</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ 'topics' == request()->path() ? 'active' : ''}}" href="{{route('topics.index')}}">
-                <i class="ni ni-pin-3 text-primary"></i>
+                <i class="ni ni-collection text-primary"></i>
                 <span class="nav-link-text">Topics</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ 'sections' == request()->path() ? 'active' : ''}}" href="{{route('sections.index')}}">
-                <i class="ni ni-single-02 text-yellow"></i>
+                <i class="ni ni-single-copy-04 text-yellow"></i>
                 <span class="nav-link-text">Sections</span>
               </a>
             </li>
@@ -77,7 +77,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <i class="ni ni-key-25 text-info"></i>
+                <i class="ni ni-ungroup text-info"></i>
                 <span class="nav-link-text">Quizzes</span>
               </a>
             </li>
@@ -92,7 +92,7 @@
           <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
               <a class="nav-link" href="#" target="_blank">
-                <i class="ni ni-spaceship"></i>
+                <i class="ni ni-chart-bar-32"></i>
                 <span class="nav-link-text">Statistics</span>
               </a>
             </li>

@@ -23,8 +23,14 @@ Route::group(['middleware' => ['auth','admin']], function () {
         return view('admin.index');
     })->name('admin');
     
-    // This route is for ajax
-    Route::get('/ajax/users', 'Admin\UserController@users')->name('ajax.users');
+    // users table [ajax only]
+    Route::get('/ajax/users', 'Admin\UserController@ajaxUsers')->name('ajax.users');
+
+    // topics table [ajax only]
+    Route::get('/ajax/topics', 'Admin\TopicController@ajaxTopics')->name('ajax.topics');
+
+    // sections table [ajax only]
+    Route::get('/ajax/sections', 'Admin\SectionController@ajaxSections')->name('ajax.sections');
     
     Route::resource('users','Admin\UserController',['names' => [
         'index' => 'users',

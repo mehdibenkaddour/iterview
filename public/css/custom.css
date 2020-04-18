@@ -6,7 +6,7 @@
     padding: 0 1rem;
 }
 
-#myTable_wrapper > div:last-child {
+.dataTables_wrapper > div:last-child {
     padding: 10px 0 20px 0;
 }
 

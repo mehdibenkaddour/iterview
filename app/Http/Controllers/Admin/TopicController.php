@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Yajra\Datatables\Datatables;
 
 class TopicController extends Controller
 {
@@ -17,8 +18,44 @@ class TopicController extends Controller
      */
     public function index()
     {
-        $topics = Topic::orderBy('id')->paginate(10);
-        return View('admin.topics.index')->with('topics',$topics);
+        // $topics = Topic::orderBy('id')->paginate(10);
+        return View('admin.topics.index');
+    }
+
+    /**
+     * This method is for ajax only
+     */
+    public function ajaxTopics() {
+        return Datatables::of(Topic::query())
+
+        // add actions collumn
+        ->addColumn('actions', function (Topic $topic) {
+            return '
+            <button
+                data-id="' . $topic->id . '"
+                class="btn btn-success btn-sm edit">Edit</button>
+            <button
+                data-id="' . $topic->id .'"
+                class="btn btn-danger btn-sm delete">Delete</button>';
+        })
+
+        ->addColumn('topic', function (Topic $topic) {
+            return '
+            <div class="media align-items-center">
+                <a href="#" class="avatar rounded-circle mr-3">
+                    <img alt="Image placeholder" src="/uploads/topics/' . $topic->image . '">
+                </a>
+                <div class="media-body">
+                  <span class="name mb-0 text-sm" id="TopicLabel">' . $topic->label . '</span>
+                </div>
+            </div>
+            ';
+        })
+        
+        // to interpret html and not considering it as text
+        ->rawColumns(['actions', 'topic'])
+
+        ->toJson();
     }
 
     /**
