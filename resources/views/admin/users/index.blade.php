@@ -196,7 +196,7 @@ $(document).ready(function() {
         // show the modal
         $('#edit-modal').modal('show');
 
-        $('#edit-form').submit(function (e) {
+        $('#edit-form').unbind('submit').submit(function (e) {
             // turn button into loading state
             iterview.handleButtonLoading(true, '#editBtn');
 

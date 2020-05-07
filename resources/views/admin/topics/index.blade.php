@@ -178,8 +178,6 @@ ITerview
 <script>
 $(document).ready(function() {
 
-  console.log(iterview);
-
   const table = handleTopicLoad();
 
   handleTopicDelete();
@@ -234,7 +232,7 @@ $(document).ready(function() {
       // show the modal
       $('#edit-modal').modal('show');
 
-      $('#edit-form').submit(function(e) {
+      $('#edit-form').unbind('submit').submit(function(e) {
 
         // turn button into loading state
         iterview.handleButtonLoading(true, '#editBtn')      
@@ -301,7 +299,7 @@ $(document).ready(function() {
     // show the modal
     $('#add-modal').modal('show');
 
-    $('#add-form').submit(function(e){
+    $('#add-form').unbind('submit').submit(function(e){
       e.preventDefault();
 
       // turn button into loading state
@@ -317,6 +315,7 @@ $(document).ready(function() {
       var form = new FormData();
       form.append('label', label);
       form.append('image', image);
+      
       $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         url: urlForm,
@@ -343,6 +342,7 @@ $(document).ready(function() {
             iterview.handleSuccessResponse(table, result, '#add-modal');
           }
         }});
+        
       });
     });
   }
