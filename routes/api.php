@@ -43,3 +43,10 @@ Route::group(['prefix' => 'v1/sections'], function (){
         Route::get('/{id}/questions', 'API\QuestionController@show');
     });
 });
+
+
+Route::group(['prefix' => 'v1/questions'], function (){ 
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('/{id}/answers', 'API\AnswerController@show');
+    });
+});
