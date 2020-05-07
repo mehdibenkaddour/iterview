@@ -13,4 +13,7 @@ class Section extends Model
     {
         return $this->belongsTo('App\Models\Topic');
     }
+    public function questions(){
+        return $this->hasMany('App\Models\Question');
+    }
 }

@@ -28,9 +28,14 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css">
+
+  <!--CodeMirror -->
+  <link rel="stylesheet" href="lib/codemirror.css">
+  <link rel="stylesheet" href="theme/material-darker.css">
+  
 </head>
 
-<body>
+<body class="modal-open">
   <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
     <div class="scrollbar-inner">
@@ -70,7 +75,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link {{ 'questions' == request()->path() ? 'active' : ''}}" href="{{route('questions.index')}}">
                 <i class="ni ni-bullet-list-67 text-default"></i>
                 <span class="nav-link-text">Questions</span>
               </a>
@@ -481,7 +486,12 @@
   <!-- Argon JS -->
   <script src="{{ asset('js/argon.js?v=1.2.0') }}"></script>
 
+ <!-- Datatables JS -->
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+
+  <!-- Code editor -->
+  <script src="lib/codemirror.js"></script>
+  <script src="mode/javascript/javascript.js"></script>
 
   <!-- Custom scripts -->
   @yield('scripts')

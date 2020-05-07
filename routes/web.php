@@ -31,6 +31,9 @@ Route::group(['middleware' => ['auth','admin']], function () {
 
     // sections table [ajax only]
     Route::get('/ajax/sections', 'Admin\SectionController@ajaxSections')->name('ajax.sections');
+    // Questions table 
+    Route::get('/ajax/questions', 'Admin\QuestionController@ajaxQuestions')->name('ajax.questions');
+    Route::get('/sections/get/{id}', 'Admin\QuestionController@getSections');
     
     Route::resource('users','Admin\UserController',['names' => [
         'index' => 'users',
@@ -47,5 +50,8 @@ Route::group(['middleware' => ['auth','admin']], function () {
     );
     Route::resource('sections','Admin\SectionController')->parameters(
         ['sections' => 'id']
+    );
+    Route::resource('questions','Admin\QuestionController')->parameters(
+        ['questions' => 'id']
     );
 });
