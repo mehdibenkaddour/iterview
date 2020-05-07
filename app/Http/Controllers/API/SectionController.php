@@ -15,7 +15,7 @@ class SectionController extends ResponseController
      */
     public function index()
     {
-        return $this->sendResponse(Section::All());
+        return $this->sendResponse(Section::withCount('questions')->get());
     }
 
     /**
@@ -48,8 +48,8 @@ class SectionController extends ResponseController
     public function show($id)
     {
         if(Topic::find($id)->sections){
-
-            return $this->sendResponse(Topic::find($id)->sections);
+            $sections = Section::withCount('questions')->where('topic_id', $id)->get();
+            return $this->sendResponse($sections);
         }else{
             return $this->sendError("ressource not found",404);
         }
