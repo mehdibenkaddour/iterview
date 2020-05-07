@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });*/
-Route::group([ 'prefix' => 'v1/user'], function (){ 
+Route::group(['prefix' => 'v1/user'], function (){ 
     Route::group(['middleware' => ['guest:api']], function () {
         Route::post('signin', 'API\AuthController@login');
         Route::post('signup', 'API\AuthController@signup');
@@ -26,15 +26,20 @@ Route::group([ 'prefix' => 'v1/user'], function (){
         Route::get('getuser', 'API\AuthController@getUser');
     });*/
 }); 
-Route::group([ 'prefix' => 'v1/topics'], function (){ 
+Route::group(['prefix' => 'v1/topics'], function (){ 
     Route::group(['middleware' => ['auth:api']], function () {
         Route::get('', 'API\TopicController@index');
         Route::get('/{id}', 'API\TopicController@show');
         Route::get('/{id}/sections','API\SectionController@show');
     });
 });
-Route::group([ 'prefix' => 'v1/sections'], function (){ 
+
+Route::group(['prefix' => 'v1/sections'], function (){ 
     Route::group(['middleware' => ['auth:api']], function () {
         Route::get('', 'API\SectionController@index');
+    });
+
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('/{id}/questions', 'API\QuestionController@show');
     });
 });

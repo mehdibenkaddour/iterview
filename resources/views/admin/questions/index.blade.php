@@ -112,62 +112,72 @@ ITerview
 
     @slot('content')
       <div class="form-group">
-        <label>Question</label>
-        <input type="text" name="add-question-1" value="" class="form-control" id="add-question-1">
-        <span class="text-danger">
-            <strong id="add-question-error-1"></strong>
-        </span>
+          <label>Question</label>
+          <input type="text" name="add-question-1" value="" class="form-control" id="add-question-1">
+          <span class="text-danger">
+              <strong id="add-question-error-1"></strong>
+          </span>
       </div>
-      <div class="form-group">
-       <label>Topic</label>
-       <select class="browser-default custom-select" name="add-topic-1" id="add-topic-1">
-        <option selected disabled>Select Topic</option>
-        @foreach($topics as $topic )
-        <option value="{{$topic->id}}">{{$topic->label}}</option>
-        @endforeach
-      </select>
-      <span class="text-danger">
-            <strong id="add-topic-error-1"></strong>
-      </span>
+
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label>Topic</label>
+            <select class="browser-default custom-select" name="add-topic-1" id="add-topic-1">
+                <option selected disabled>Select Topic</option>
+                @foreach($topics as $topic )
+                <option value="{{$topic->id}}">{{$topic->label}}</option>
+                @endforeach
+            </select>
+  
+            <span class="text-danger">
+                <strong id="add-topic-error-1"></strong>
+            </span>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-group">
+              <label>Section</label>
+              <select class="browser-default custom-select" name="add-section-1" id="add-section-1">
+                  <option selected disabled>Select Section</option>
+              </select>
+          </div>
+        </div>
       </div>
+
       <div class="form-group">
-       <label>Section</label>
-       <select class="browser-default custom-select" name="add-section-1" id="add-section-1">
-        <option selected disabled>Select Section</option>
-      </select>
+          <label for="code">Enter code <small>(Optional)</small></label>
+          <textarea class="form-control" id="code-1" rows="3" name="code-1"></textarea>
       </div>
-      <div class="form-group">
-        <label for="code">Enter code <small>(Optional)</small></label>
-        <textarea class="form-control" id="code-1" rows="3" name="code-1"></textarea>
-       </div>
       <div class="form-group" id="answers">
-       <label>Answers</label>
-       <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-               <input type="radio" name="answer">
-            </div>
+          <label>Answers</label>
+          <div class="input-group">
+              <div class="input-group-prepend">
+                  <div class="input-group-text">
+                      <input type="radio" name="answer">
+                  </div>
+              </div>
+              <input type="text" class="form-control" aria-label="Text input with radio button">
           </div>
-        <input type="text" class="form-control" aria-label="Text input with radio button">
-       </div>
-       <br/>
-       <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-               <input type="radio" name="answer" >
-            </div>
+          <br />
+          <div class="input-group">
+              <div class="input-group-prepend">
+                  <div class="input-group-text">
+                      <input type="radio" name="answer">
+                  </div>
+              </div>
+              <input type="text" class="form-control" aria-label="Text input with radio button">
           </div>
-        <input type="text" class="form-control" aria-label="Text input with radio button">
-       </div>
-       <br/>
-       <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-               <input type="radio" name="answer">
-            </div>
+          <br />
+          <div class="input-group">
+              <div class="input-group-prepend">
+                  <div class="input-group-text">
+                      <input type="radio" name="answer">
+                  </div>
+              </div>
+              <input type="text" class="form-control" aria-label="Text input with radio button">
           </div>
-        <input type="text" class="form-control" aria-label="Text input with radio button">
-       </div>
       </div>
 
     @endslot
