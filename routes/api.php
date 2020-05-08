@@ -37,10 +37,8 @@ Route::group(['prefix' => 'v1/topics'], function (){
 Route::group(['prefix' => 'v1/sections'], function (){ 
     Route::group(['middleware' => ['auth:api']], function () {
         Route::get('', 'API\SectionController@index');
-    });
-
-    Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/{id}/questions', 'API\QuestionController@show');
+        Route::get('/{id}/answers', 'API\AnswerController@answers');
     });
 });
 
