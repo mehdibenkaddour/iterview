@@ -98,11 +98,16 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'correct_answers.required' => 'you must select at least one of the answer as correct',
+        ];
+                
         $validator = Validator::make($request->all(), [
             'content' => ['required', 'string'],
             'topic'=>['required'],
             'section'=>['required'],
-        ]);
+            'correct_answers'=>['required'],
+        ],$messages);
         
         if ($validator->fails())
         {
@@ -116,20 +121,25 @@ class QuestionController extends Controller
         $question->code=$request->input('code');
         $question->save();
 
-        $correctAnswer=new Answer();
+        $correctAnswers=$request->input('correct_answers');
+        foreach($correctAnswers as $correctAnswer){
+            $answer=new Answer();
+            $answer->content=$correctAnswer;
+            $answer->correct=true;
+            $answer->question_id=$question->id;
+            $answer->save();
+        }
 
-        $correctAnswer->content=$request->input('correct_answer');
-        $correctAnswer->correct=true;
-        $correctAnswer->question_id=$question->id;
-        $correctAnswer->save();
-
-        $answers=$request->input('wrong_answers');
-        foreach($answers as $answer){
-            $wrongAnswer=new Answer();
-            $wrongAnswer->content=$answer;
-            $wrongAnswer->correct=false;
-            $wrongAnswer->question_id=$question->id;
-            $wrongAnswer->save();
+        $wrongAnswers=$request->input('wrong_answers');
+        // it could be an empty array if none of answers is correct
+        if(is_array($wrongAnswers)){
+            foreach($wrongAnswers as $wrongAnswer){
+                $answer=new Answer();
+                $answer->content=$wrongAnswer;
+                $answer->correct=false;
+                $answer->question_id=$question->id;
+                $answer->save();
+            }
         }
 
         return response()->json(['alert' => 'Section has been Added with success']);

@@ -331,7 +331,7 @@ $(document).ready(function() {
             }
             else
             {
-              iterview.handleSuccessResponse(table, result, '#add-modal')
+              iterview.handleSuccessResponse(table, result, '#add-modal');
             }
           }});
 

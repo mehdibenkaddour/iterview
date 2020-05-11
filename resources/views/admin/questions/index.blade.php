@@ -142,6 +142,9 @@ ITerview
               <select class="browser-default custom-select" name="add-section-1" id="add-section-1">
                   <option selected disabled>Select Section</option>
               </select>
+              <span class="text-danger">
+                <strong id="add-section-error-1"></strong>
+            </span>
           </div>
         </div>
       </div>
@@ -155,29 +158,41 @@ ITerview
           <div class="input-group">
               <div class="input-group-prepend">
                   <div class="input-group-text">
-                      <input type="radio" name="answer">
+                      <input type="checkbox" name="answer">
                   </div>
               </div>
-              <input type="text" class="form-control" aria-label="Text input with radio button">
+              <input type="text" class="form-control" aria-label="Text input with radio button" required>
           </div>
           <br />
           <div class="input-group">
               <div class="input-group-prepend">
                   <div class="input-group-text">
-                      <input type="radio" name="answer">
+                      <input type="checkbox" name="answer">
                   </div>
               </div>
-              <input type="text" class="form-control" aria-label="Text input with radio button">
+              <input type="text" class="form-control" aria-label="Text input with radio button" required>
           </div>
           <br />
           <div class="input-group">
               <div class="input-group-prepend">
                   <div class="input-group-text">
-                      <input type="radio" name="answer">
+                      <input type="checkbox" name="answer">
                   </div>
               </div>
-              <input type="text" class="form-control" aria-label="Text input with radio button">
+              <input type="text" class="form-control" aria-label="Text input with radio button" required>
           </div>
+          <br />
+          <div class="input-group">
+              <div class="input-group-prepend">
+                  <div class="input-group-text">
+                      <input type="checkbox" name="answer">
+                  </div>
+              </div>
+              <input type="text" class="form-control" aria-label="Text input with radio button" required>
+          </div>
+      <span class="text-danger">
+                <strong id="add-answer-error-1"></strong>
+      </span>
       </div>
 
     @endslot
@@ -393,7 +408,9 @@ $(document).ready(function() {
         if($('#add-type').val()==1){
             $('#add-form-1').attr('action','{{url("/questions")}}');
 
-            $( '#add-question-error-1' ).html( "" ); 
+            $( '#add-question-error-1' ).html( "" );
+            $( '#add-topic-error-1' ).html( "" );
+            $( '#add-answer-error-1' ).html( "" );
             // clear inputs
             $('#add-question-1').val('');
             myCodeMirror.setValue("");
@@ -401,33 +418,47 @@ $(document).ready(function() {
             $("#answers input[type=text]").each(function() {
                     this.value='';
                 });
-            $("#answers input[type=radio]").each(function() {
+            $("#answers input[type=checkbox]").each(function() {
                     this.checked=false;
                 });
             $('#add-topic-1').get(0).selectedIndex = 0;
 
             
             // show the modal
-            $('#add-modal-1').modal('show');
-            
+            $('#add-modal-1').modal('show'); 
 
             $('#add-form-1').unbind('submit').submit(function(e){
                 // turn button into loading state
                 iterview.handleButtonLoading(true, '#addBtn');
-                const dataAnswer= [];
-                var correctAnswer= "";
+                var dataAnswer= [];
+                var correctAnswer= [];
                 const urlForm= $(this).attr('action');
                 e.preventDefault();
 
+                // Get all asnwers
                 $("#answers input[type=text]").each(function() {
                     dataAnswer.push(this.value);
                 });
-
-                const radioButtons = $("#answers input:radio[name='answer']");
-                var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
-                correctAnswer= dataAnswer[selectedIndex];
-                dataAnswer.splice(selectedIndex,1);
-                console.log($('#code-1').val());
+                // get index of the correct answers
+                var checkedList=[];
+                $("input[name='answer']").each(function (i) { 
+                        // Push the value onto the array
+                        if($(this)[0].checked){
+                          checkedList.push(i);
+                        }
+                });
+                // add the correct answer in correcAnswer Array
+                dataAnswer.forEach(function(value,index){
+                  checkedList.forEach(function(val,ind){
+                    if(index==val){
+                      correctAnswer.push(value);
+                    }
+                  });
+                });
+               // get the wrong answer by remove the correct answer from the dataAnswer Array
+                checkedList.slice().reverse().forEach(function(value,index){
+                      dataAnswer.splice(value,1);
+                });
                 $('#add-question-error-1').html( "" );
                 $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -438,7 +469,7 @@ $(document).ready(function() {
                     topic: $('#add-topic-1').val(),
                     section: $('#add-section-1').val(),
                     type:1,
-                    correct_answer:correctAnswer,
+                    correct_answers:correctAnswer,
                     wrong_answers:dataAnswer,
                     code:$('#code-1').val(),
 
@@ -446,22 +477,46 @@ $(document).ready(function() {
                 success: function(result){
                     // turn button into default state
                     iterview.handleButtonLoading(false, '#addBtn');
-                    /*if(result.errors)
+                    if(result.errors)
                     {
-                    if(result.errors.content && result.errors.topic){
-                        $('#add-form-1').find('#add-content-error-1').html(result.errors.content[0]);
-                    }else if(result.errors.topic){
-                        $('#add-form-1').find('#add-topic-error-1').html(result.errors.topic[0]);
-                    }else{
-                        $('#add-form').find('#add-content-error-1').html(result.errors.content[0]);
+                      if(result.errors.content && result.errors.topic && result.errors.correct_answers){
+                        $( '#add-topic-error-1' ).html( "" );
+                        $( '#add-answer-error-1' ).html( "" );
+                        $('#add-form-1').find('#add-question-error-1').html(result.errors.content[0]);
+                      }else if(result.errors.content && result.errors.topic){
+                        $( '#add-topic-error-1' ).html( "" );
+                        $( '#add-answer-error-1' ).html( "" );
+                        $('#add-form-1').find('#add-question-error-1').html(result.errors.content[0]);
+                       }else if(result.errors.content &&  result.errors.correct_answers){
+                         $( '#add-topic-error-1' ).html( "" );
+                         $( '#add-answer-error-1' ).html( "" );
+                         $('#add-form-1').find('#add-question-error-1').html(result.errors.content[0]);
+                       }else if(result.errors.topic && result.errors.correct_answers){
+                        $( '#add-question-error-1' ).html( "" );
+                        $( '#add-answer-error-1' ).html( "" );
+                         $('#add-form-1').find('#add-topic-error-1').html(result.errors.topic[0]);
+                       }else if(result.errors.topic){
+                         $( '#add-question-error-1' ).html( "" );
+                         $( '#add-answer-error-1' ).html( "" );
+                         $('#add-form-1').find('#add-topic-error-1').html(result.errors.topic[0]);
+                       }else if(result.errors.correct_answers){
+                         $( '#add-question-error-1' ).html( "" );
+                         $( '#add-topic-error-1' ).html( "" );
+                         $('#add-form-1').find('#add-answer-error-1').html(result.errors.correct_answers[0]);
+                       }else{
+                        $( '#add-topic-error-1' ).html( "" );
+                        $( '#add-answer-error-1' ).html( "" );
+                        $('#add-form').find('#add-question-error-1').html(result.errors.content[0]);
                       }
-                    }*/
-                    iterview.handleSuccessResponse(table, result, '#add-modal')
+                    }
+                    else{
+                        iterview.handleSuccessResponse(table, result, '#add-modal-1');
+                    }
                 }});
 
             });
-        }
-    })
+          }
+        })
     });
     $('select[name="add-topic-1"]').on('change', function(){
         var topicId = $(this).val();
