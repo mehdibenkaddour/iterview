@@ -284,7 +284,7 @@ $(document).ready(function() {
             theme: "material-darker",
             lineNumbers: true,
             indentUnit: 4
-        }); 
+        });
   const table = handleQuestionsLoad();
 
   handleQuestionsDelete();
@@ -544,7 +544,9 @@ $(document).ready(function() {
   }
     
 });
-
+function qsa(sel) {
+    return Array.apply(null, document.querySelectorAll(sel));
+}
 </script>
 
 @endsection
