@@ -75,6 +75,16 @@ ITerview
         @endforeach
         </select>
       </div>
+      <div class="form-group">
+       <label>Image</label>
+        <div class="custom-file">
+            <input type="file" name="image" class="custom-file-input" id="edit-image">
+            <label class="custom-file-label" for="image">Choose Image</label>
+        </div>
+        <span class="text-danger">
+              <strong id="edit-image-error"></strong>
+        </span>
+      </div>
     @endslot
 
     @slot('cancel')
@@ -129,6 +139,16 @@ ITerview
       <span class="text-danger">
             <strong id="add-topic-error"></strong>
       </span>
+      </div>
+      <div class="form-group">
+       <label>Image</label>
+        <div class="custom-file">
+            <input type="file" name="image" class="custom-file-input" id="add-image">
+            <label class="custom-file-label" for="image">Choose Image</label>
+        </div>
+        <span class="text-danger">
+              <strong id="add-image-error"></strong>
+        </span>
       </div>
     @endslot
 
@@ -258,15 +278,24 @@ $(document).ready(function() {
         e.preventDefault();
         $( '#edit-label-error' ).html( "" );
         $( '#edit-image-error' ).html( "" );
+
+        var label= $('#edit-label').val();
+        var image=$('#edit-image')[0].files[0];
+        var topic=$('#edit-topic').val();
+        var form = new FormData();
+
+        form.append('label', label);
+        form.append('image', image);
+        form.append('topic', topic);
+        form.append('_method','PUT');
         $.ajax({    
           headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           url: urlForm,
           method: 'POST',
-          data: {
-            label : $('#edit-label').val(),
-            topic:$('#edit-topic').val(),
-            _method:"PUT",
-          },
+          data: form,
+          contentType: false,
+          processData: false,
+
           success: function(result){
             // turn button into default state
             iterview.handleButtonLoading(false, '#editBtn');
@@ -308,23 +337,34 @@ $(document).ready(function() {
         const urlForm= $(this).attr('action');
         e.preventDefault();
         $( '#add-label-error' ).html( "" );
+        $('#add-image-error').html('');
+
+        var label = $('#add-label').val();
+        var image = $('#add-image')[0].files[0];
+        var topic = $('#add-topic').val();
+        var form = new FormData();
+        form.append('label', label);
+        form.append('image', image);
+        form.append('topic', topic);
         $.ajax({
           headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           url: urlForm,
           method: 'POST',
-          data: {
-            label: $('#add-label').val(),
-            topic: $('#add-topic').val(),
-          },
+          data: form,
+          contentType: false,
+          processData: false,
+
           success: function(result){
             // turn button into default state
             iterview.handleButtonLoading(false, '#addBtn');
             if(result.errors)
             {
-              if(result.errors.label && result.errors.topic){
+              if(result.errors.label && result.errors.topic && result.errors.image){
                 $('#add-form').find('#add-label-error').html(result.errors.label[0]);
               }else if(result.errors.topic){
                 $('#add-form').find('#add-topic-error').html(result.errors.topic[0]);
+              }else if(result.errors.image){
+                $('#add-form').find('#add-image-error').html(result.errors.image[0]);
               }else{
                 $('#add-form').find('#add-label-error').html(result.errors.label[0]);
               }

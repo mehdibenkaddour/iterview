@@ -45,7 +45,7 @@ class SectionController extends Controller
             return '
             <div class="media align-items-center">
                 <a href="#" class="avatar rounded-circle mr-3">
-                    <img alt="Image placeholder" src="/uploads/topics/' . $section->topic->image . '">
+                    <img alt="Image placeholder" src="/uploads/sections/' . $section->image . '">
                 </a>
                 <div class="media-body">
                   <span class="name mb-0 text-sm" id="sectionLabel">' . $section->label . '</span>
@@ -85,6 +85,7 @@ class SectionController extends Controller
         $validator = Validator::make($request->all(), [
             'label' => ['required', 'string', 'max:255'],
             'topic'=>['required'],
+            'image' => ['required','image','mimes:jpeg,png,jpg,gif', 'max:2084'],
         ]);
         
         if ($validator->fails())
@@ -95,6 +96,18 @@ class SectionController extends Controller
 
         $section->label=$request->input('label');
         $section->topic_id=$request->input('topic');
+
+        if($request->hasfile('image')) {
+            $file=$request->file('image');
+            $extension=$file->getClientOriginalExtension();
+            $filename=time() . '.' . $extension;
+            $file->move('uploads/sections/',$filename);
+            $section->image=$filename;
+
+        } else {
+            return $request;
+            $section->image="default_image";
+        }
         $section->save();
 
         return response()->json(['alert' => 'Section has been Added with success']);
@@ -145,6 +158,14 @@ class SectionController extends Controller
 
         $section->label=$request->input('label');
         $section->topic_id=$request->input('topic');
+
+        if($request->hasfile('image')){
+            $file=$request->file('image');
+            $extension=$file->getClientOriginalExtension();
+            $filename=time() . '.' . $extension;
+            $file->move('uploads/sections/',$filename);
+            $section->image=$filename;
+        }
         $section->update();
         return response()->json(['alert' => 'Section has been updated with success']);
     }

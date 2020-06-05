@@ -145,7 +145,6 @@ class TopicController extends Controller
 
         $validator = Validator::make($request->all(), [
             'label' => ['required', 'string', 'max:255'],
-            'image' => ['required','image','mimes:jpeg,png,jpg,gif', 'max:2084'],
         ]);
         
         if ($validator->fails())
@@ -160,10 +159,6 @@ class TopicController extends Controller
             $filename=time() . '.' . $extension;
             $file->move('uploads/topics/',$filename);
             $topic->image=$filename;
-        }
-        else{
-            return $request;
-            $topic->image="default_image.png";
         }
         $topic->update();
         return response()->json(['alert' => 'Topic has been updated with success']);
