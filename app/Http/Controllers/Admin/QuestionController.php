@@ -35,6 +35,7 @@ class QuestionController extends Controller
             return '
             <button
                 data-id="' . $question->id . '"
+                data-type="' . $question->type . '"
                 class="btn btn-success btn-sm edit">Edit</button>
             <button
                 data-id="' . $question->id .'"
@@ -98,23 +99,21 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        $question = new Question();
+        if($request->input('type')==1){
         $messages = [
             'correct_answers.required' => 'you must select at least one of the answer as correct',
-        ];
-                
+            ];
+                    
         $validator = Validator::make($request->all(), [
             'content' => ['required', 'string'],
-            'topic'=>['required'],
-            'section'=>['required'],
             'correct_answers'=>['required'],
-        ],$messages);
-        
+            ],$messages);
+            
         if ($validator->fails())
         {
             return response()->json(['errors'=>$validator->errors()]);
         }
-        $question = new Question();
-
         $question->content=$request->input('content');
         $question->section_id=$request->input('section');
         $question->type=$request->input('type');
@@ -143,6 +142,56 @@ class QuestionController extends Controller
         }
 
         return response()->json(['alert' => 'Section has been Added with success']);
+       }else{
+        $messages = [
+            'correct_answers.required' => 'you must select at least one of the answer as correct',
+        ];
+                
+        $validator = Validator::make($request->all(), [
+            'content' => ['required', 'string'],
+            'correct_answers'=>['required'],
+            'image' => ['required','image','mimes:jpeg,png,jpg,gif', 'max:2084'],
+        ],$messages);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()]);
+        }
+        $question->content=$request->input('content');
+        $question->section_id=$request->input('section');
+        $question->type=$request->input('type');
+        if($request->hasfile('image')) {
+            $file=$request->file('image');
+            $extension=$file->getClientOriginalExtension();
+            $filename=time() . '.' . $extension;
+            $file->move('uploads/questions/',$filename);
+            $question->image=$filename;
+        }
+        $question->save();
+        $correctAnswers=json_decode($request->input('correct_answers'), true);
+        foreach($correctAnswers as $correctAnswer){
+            $answer=new Answer();
+            $answer->content=$correctAnswer;
+            $answer->correct=true;
+            $answer->question_id=$question->id;
+            $answer->save();
+        }
+
+        $wrongAnswers=json_decode($request->input('wrong_answers'), true);
+        // it could be an empty array if none of answers is correct
+        if(is_array($wrongAnswers)){
+            foreach($wrongAnswers as $wrongAnswer){
+                $answer=new Answer();
+                $answer->content=$wrongAnswer;
+                $answer->correct=false;
+                $answer->question_id=$question->id;
+                $answer->save();
+            }
+        }
+
+        return response()->json(['alert' => 'Section has been Added with success']);
+
+       }
     }
 
     /**
@@ -187,6 +236,8 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $question=Question::findOrFail($id);
+        $question->delete();
+        return redirect('questions');
     }
 }

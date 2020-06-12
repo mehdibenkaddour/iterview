@@ -93,6 +93,8 @@ ITerview
 
 <!-- ADD Modal Component -->
 
+
+<!-- Type 1 -->
 @component('admin.helpers.modal')
     @slot('title')
     Add Question Type 1
@@ -119,35 +121,7 @@ ITerview
           </span>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label>Topic</label>
-            <select class="browser-default custom-select" name="add-topic-1" id="add-topic-1">
-                <option selected disabled>Select Topic</option>
-                @foreach($topics as $topic )
-                <option value="{{$topic->id}}">{{$topic->label}}</option>
-                @endforeach
-            </select>
-  
-            <span class="text-danger">
-                <strong id="add-topic-error-1"></strong>
-            </span>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="form-group">
-              <label>Section</label>
-              <select class="browser-default custom-select" name="add-section-1" id="add-section-1">
-                  <option selected disabled>Select Section</option>
-              </select>
-              <span class="text-danger">
-                <strong id="add-section-error-1"></strong>
-            </span>
-          </div>
-        </div>
-      </div>
+      
 
       <div class="form-group">
           <label for="code">Enter code <small>(Optional)</small></label>
@@ -211,6 +185,106 @@ ITerview
 
 @endcomponent
 
+<!-- type 2 -->
+
+@component('admin.helpers.modal')
+    @slot('title')
+    Add Question Type 2
+    @endslot
+
+    @slot('modalId')
+    add-modal-2
+    @endslot
+
+    @slot('formId')
+    add-form-2
+    @endslot
+
+    @slot('method')
+    POST
+    @endslot
+
+    @slot('content')
+      <div class="form-group">
+          <label>Question</label>
+          <input type="text" name="add-question-2" value="" class="form-control" id="add-question-2">
+          <span class="text-danger">
+              <strong id="add-question-error-2"></strong>
+          </span>
+      </div>
+
+      <div class="form-group">
+       <label>Image</label>
+        <div class="custom-file">
+            <input type="file" name="image" class="custom-file-input" id="add-image">
+            <label class="custom-file-label" for="image">Choose Image</label>
+        </div>
+        <span class="text-danger">
+              <strong id="add-image-error"></strong>
+        </span>
+      </div>
+
+      <div class="form-group" id="answers-2">
+          <label>Answers</label>
+          <div class="input-group">
+              <div class="input-group-prepend">
+                  <div class="input-group-text">
+                      <input type="checkbox" name="answer-2">
+                  </div>
+              </div>
+              <input type="text" class="form-control" aria-label="Text input with radio button" required>
+          </div>
+          <br />
+          <div class="input-group">
+              <div class="input-group-prepend">
+                  <div class="input-group-text">
+                      <input type="checkbox" name="answer-2">
+                  </div>
+              </div>
+              <input type="text" class="form-control" aria-label="Text input with radio button" required>
+          </div>
+          <br />
+          <div class="input-group">
+              <div class="input-group-prepend">
+                  <div class="input-group-text">
+                      <input type="checkbox" name="answer-2">
+                  </div>
+              </div>
+              <input type="text" class="form-control" aria-label="Text input with radio button" required>
+          </div>
+          <br />
+          <div class="input-group">
+              <div class="input-group-prepend">
+                  <div class="input-group-text">
+                      <input type="checkbox" name="answer-2">
+                  </div>
+              </div>
+              <input type="text" class="form-control" aria-label="Text input with radio button" required>
+          </div>
+      <span class="text-danger">
+                <strong id="add-answer-error-2"></strong>
+      </span>
+      </div>
+
+    @endslot
+
+    @slot('cancel')
+        Cancel
+    @endslot
+
+    @slot('confirm')
+        Add
+    @endslot
+
+    @slot('submitId')
+      addBtn-2
+    @endslot
+
+@endcomponent
+
+
+
+
 
 <div class="modal fade" id="question-type">
   <div class="modal-dialog" role="document">
@@ -222,10 +296,42 @@ ITerview
         </button>
       </div>
       <div class="modal-body">
+      {{-- Topic and Section of the question --}}
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label>Topic</label>
+            <select class="browser-default custom-select" name="add-topic-1" id="add-topic-1" required>
+                <option selected disabled value="">Select Topic</option>
+                @foreach($topics as $topic )
+                <option value="{{$topic->id}}">{{$topic->label}}</option>
+                @endforeach
+            </select>
+  
+            <span class="text-danger">
+                <strong id="add-topic-error-1"></strong>
+            </span>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-group">
+              <label>Section</label>
+              <select class="browser-default custom-select" name="add-section-1" id="add-section-1" required>
+                  <option selected disabled>Select Section</option>
+              </select>
+              <span class="text-danger">
+                <strong id="add-section-error-1"></strong>
+            </span>
+          </div>
+        </div>
+      </div>
+
+
        <div class="form-group">
        <label>Type</label>
-       <select class="browser-default custom-select" name="add-type" id="add-type">
-        <option selected disabled required>Select Type</option>
+       <select class="browser-default custom-select" name="add-type" id="add-type" required>
+        <option selected disabled value="">Select Type</option>
         <option value="1">Type 1</option>
         <option value="2">Type 2</option>
         <option value="3">Type 3</option>
@@ -234,7 +340,7 @@ ITerview
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="step_1" data-id="">Next</button>
+        <button type="button" class="btn btn-primary" id="step_1" data-topic="">Next</button>
       </div>
     </div>
   </div>
@@ -314,12 +420,12 @@ $(document).ready(function() {
 
   function handleQuestionsDelete() {
     // DELETE A Topic
-    $('#sectionsTable tbody').on('click', 'button.delete', function() {
+    $('#questionsTable tbody').on('click', 'button.delete', function() {
       // get topic id
-      const sectionId = $(this).data('id');
+      const questionId = $(this).data('id');
 
       // set action
-      $('#delete-form').attr('action', '{{url("/sections")}}'+"/" + sectionId)
+      $('#delete-form').attr('action', '{{url("/questions")}}'+"/" + questionId);
 
       // show the modal
       $('#delete-modal').modal('show');
@@ -328,12 +434,13 @@ $(document).ready(function() {
 
   function handleQuestionsEdit() {
     // EDIT A topic
-    $('#sectionsTable tbody').on('click', 'button.edit', function() {
+    $('#questionsTable tbody').on('click', 'button.edit', function() {
       // get topic id
-      const sectioncId = $(this).data('id');
+      const questionId = $(this).data('id');
+      const questionType = $(this).data('type');
 
       // set action
-      $('#edit-form').attr('action', '{{url("/sections")}}'+"/"+ sectioncId);
+      $('#edit-form').attr('action', '{{url("/sections")}}'+"/"+ questionId);
 
       // reset selected option for each clicon edit
       $('#edit-topic > option').each(function(){
@@ -398,6 +505,7 @@ $(document).ready(function() {
     // ADD Question
     $('.add').on('click', function() {
         $('#add-type').get(0).selectedIndex = 0;
+        $('#add-topic-1').get(0).selectedIndex = 0;
         $('#question-type').modal('show')
         $('#step_1').on('click',function(){
         // adding this line to keep scroll bar in the second modal
@@ -409,8 +517,6 @@ $(document).ready(function() {
             $('#add-form-1').attr('action','{{url("/questions")}}');
 
             $( '#add-question-error-1' ).html( "" );
-            $( '#add-topic-error-1' ).html( "" );
-            $( '#add-answer-error-1' ).html( "" );
             // clear inputs
             $('#add-question-1').val('');
             myCodeMirror.setValue("");
@@ -421,7 +527,7 @@ $(document).ready(function() {
             $("#answers input[type=checkbox]").each(function() {
                     this.checked=false;
                 });
-            $('#add-topic-1').get(0).selectedIndex = 0;
+
 
             
             // show the modal
@@ -479,35 +585,110 @@ $(document).ready(function() {
                     iterview.handleButtonLoading(false, '#addBtn');
                     if(result.errors)
                     {
-                      if(result.errors.content && result.errors.topic && result.errors.correct_answers){
-                        $( '#add-topic-error-1' ).html( "" );
+                      if(result.errors.content && result.errors.correct_answers){
                         $( '#add-answer-error-1' ).html( "" );
                         $('#add-form-1').find('#add-question-error-1').html(result.errors.content[0]);
-                      }else if(result.errors.content && result.errors.topic){
-                        $( '#add-topic-error-1' ).html( "" );
-                        $( '#add-answer-error-1' ).html( "" );
-                        $('#add-form-1').find('#add-question-error-1').html(result.errors.content[0]);
-                       }else if(result.errors.content &&  result.errors.correct_answers){
-                         $( '#add-topic-error-1' ).html( "" );
-                         $( '#add-answer-error-1' ).html( "" );
-                         $('#add-form-1').find('#add-question-error-1').html(result.errors.content[0]);
-                       }else if(result.errors.topic && result.errors.correct_answers){
-                        $( '#add-question-error-1' ).html( "" );
-                        $( '#add-answer-error-1' ).html( "" );
-                         $('#add-form-1').find('#add-topic-error-1').html(result.errors.topic[0]);
-                       }else if(result.errors.topic){
+                      }else if(result.errors.correct_answers){
                          $( '#add-question-error-1' ).html( "" );
-                         $( '#add-answer-error-1' ).html( "" );
-                         $('#add-form-1').find('#add-topic-error-1').html(result.errors.topic[0]);
-                       }else if(result.errors.correct_answers){
-                         $( '#add-question-error-1' ).html( "" );
-                         $( '#add-topic-error-1' ).html( "" );
                          $('#add-form-1').find('#add-answer-error-1').html(result.errors.correct_answers[0]);
                        }else{
-                        $( '#add-topic-error-1' ).html( "" );
-                        $( '#add-answer-error-1' ).html( "" );
-                        $('#add-form').find('#add-question-error-1').html(result.errors.content[0]);
-                      }
+                         $( '#add-answer-error-1' ).html( "" );
+                         $('#add-form-1').find('#add-question-error-1').html(result.errors.content[0]);
+                       }
+                    }
+                    else{
+                        iterview.handleSuccessResponse(table, result, '#add-modal-1');
+                    }
+                }});
+
+            });
+          }else{
+            $('#add-form-2').attr('action','{{url("/questions")}}');
+
+            $( '#add-question-error-2' ).html( "" );
+            // clear inputs
+            $('#add-question-2').val('');
+            $("#answers-2 input[type=text]").each(function() {
+                    this.value='';
+                });
+            $("#answers-2 input[type=checkbox]").each(function() {
+                    this.checked=false;
+                });
+
+
+            
+            // show the modal
+            $('#add-modal-2').modal('show');
+
+            $('#add-form-2').unbind('submit').submit(function(e){
+                // turn button into loading state
+                iterview.handleButtonLoading(true, '#addBtn-2');
+                var dataAnswer= [];
+                var correctAnswer= [];
+                const urlForm= $(this).attr('action');
+                e.preventDefault();
+
+                // Get all asnwers
+                $("#answers-2 input[type=text]").each(function() {
+                    dataAnswer.push(this.value);
+                });
+                // get index of the correct answers
+                var checkedList=[];
+                $("input[name='answer-2']").each(function (i) { 
+                        // Push the value onto the array
+                        if($(this)[0].checked){
+                          checkedList.push(i);
+                        }
+                });
+                // add the correct answer in correcAnswer Array
+                dataAnswer.forEach(function(value,index){
+                  checkedList.forEach(function(val,ind){
+                    if(index==val){
+                      correctAnswer.push(value);
+                    }
+                  });
+                });
+               // get the wrong answer by remove the correct answer from the dataAnswer Array
+                checkedList.slice().reverse().forEach(function(value,index){
+                      dataAnswer.splice(value,1);
+                });
+                $('#add-question-error-2').html( "" );
+
+                var content = $('#add-question-2').val();
+                var image = $('#add-image')[0].files[0];
+                var topic = $('#add-topic-1').val();
+                var section = $('#add-section-1').val();
+                var form = new FormData();
+                form.append('content', content);
+                form.append('image', image);
+                form.append('topic', topic);
+                form.append('section', section);
+                form.append('type',2);
+                form.append('correct_answers',JSON.stringify(correctAnswer));
+                form.append('wrong_answers',JSON.stringify(dataAnswer));
+                console.log(2);
+                $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: urlForm,
+                method: 'POST',
+                data: form,
+                contentType: false,
+                processData: false,
+                success: function(result){
+                    // turn button into default state
+                    iterview.handleButtonLoading(false, '#addBtn-2');
+                    if(result.errors)
+                    {
+                      if(result.errors.content && result.errors.correct_answers){
+                        $( '#add-answer-error-2' ).html( "" );
+                        $('#add-form-2').find('#add-question-error-2').html(result.errors.content[0]);
+                      }else if(result.errors.correct_answers){
+                         $( '#add-question-error-1' ).html( "" );
+                         $('#add-form-21').find('#add-answer-error-2').html(result.errors.correct_answers[0]);
+                       }else{
+                         $( '#add-answer-error-1' ).html( "" );
+                         $('#add-form-2').find('#add-question-error-2').html(result.errors.content[0]);
+                       }
                     }
                     else{
                         iterview.handleSuccessResponse(table, result, '#add-modal-1');
