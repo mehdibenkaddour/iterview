@@ -21,6 +21,10 @@ Route::group(['prefix' => 'v1/user'], function (){
         Route::post('signin', 'API\AuthController@login');
         Route::post('signup', 'API\AuthController@signup');
     });
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('progress','API\ProgressController@store');
+        Route::get('progress','API\ProgressController@progress');
+    });
     /*Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'API\AuthController@logout');
         Route::get('getuser', 'API\AuthController@getUser');

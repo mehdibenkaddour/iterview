@@ -16,4 +16,7 @@ class Section extends Model
     public function questions(){
         return $this->hasMany('App\Models\Question');
     }
+    public function progresses(){
+        return $this->hasMany('App\Models\Progress');
+    }
 }
