@@ -30,8 +30,8 @@
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css">
 
   <!--CodeMirror -->
-  <link rel="stylesheet" href="lib/codemirror.css">
-  <link rel="stylesheet" href="theme/material-darker.css">
+  <link rel="stylesheet" href="{{asset('lib/codemirror.css')}}">
+  <link rel="stylesheet" href="{{asset('theme/material-darker.css')}}">
   
 </head>
 
@@ -490,8 +490,8 @@
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
 
   <!-- Code editor -->
-  <script src="http://127.0.0.1:8000/lib/codemirror.js"></script>
-  <script src="http://127.0.0.1:8000/mode/javascript/javascript.js"></script>
+  <script src="{{asset('lib/codemirror.js')}}"></script>
+  <script src="{{asset('mode/javascript/javascript.js')}}"></script>
 
   <!-- Custom scripts -->
   @yield('scripts')
