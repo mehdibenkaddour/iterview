@@ -7,7 +7,7 @@ ITerview
 @section('content')
 @component('admin.helpers.modal')
     @slot('title')
-        Delete alert
+        Supprimer un élement
     @endslot
     
     @slot('modalId')
@@ -23,15 +23,15 @@ ITerview
     @endslot
 
     @slot('content')
-    Are you sure you wan't to delete this topic
+    Voulez-vous vraiment supprimer cet élement !
     @endslot
 
     @slot('cancel')
-    Cancel
+    Annuler
     @endslot
 
     @slot('confirm')
-    Yes, delete
+    Oui, supprimer
     @endslot
 
     @slot('submitId')
@@ -44,7 +44,7 @@ ITerview
 
 @component('admin.helpers.modal')
     @slot('title')
-    Edit Section
+    Modifier un élement
     @endslot
 
     @slot('modalId')
@@ -61,14 +61,14 @@ ITerview
 
     @slot('content')
       <div class="form-group">
-        <label>Label</label>
+        <label>Le titre</label>
         <input type="text" name="label" value="" class="form-control" id="edit-label">
         <span class="text-danger">
             <strong id="edit-label-error"></strong>
         </span>
       </div>
       <div class="form-group">
-        <label>Topic</label>
+        <label>Le sujet</label>
         <select class="browser-default custom-select" name="edit-topic" id="edit-topic">
         @foreach($topics as $topic )
         <option value="{{$topic->id}}">{{$topic->label}}</option>
@@ -76,10 +76,10 @@ ITerview
         </select>
       </div>
       <div class="form-group">
-       <label>Image</label>
+       <label>L'image</label>
         <div class="custom-file">
             <input type="file" name="image" class="custom-file-input" id="edit-image">
-            <label class="custom-file-label" for="image">Choose Image</label>
+            <label class="custom-file-label" for="image">Choisissez l'image</label>
         </div>
         <span class="text-danger">
               <strong id="edit-image-error"></strong>
@@ -88,11 +88,11 @@ ITerview
     @endslot
 
     @slot('cancel')
-        Cancel
+        Annuler
     @endslot
 
     @slot('confirm')
-        Update
+        Modifier
     @endslot
 
     @slot('submitId')
@@ -105,7 +105,7 @@ ITerview
 
 @component('admin.helpers.modal')
     @slot('title')
-    Add Section
+    Ajouter un élement
     @endslot
 
     @slot('modalId')
@@ -122,16 +122,16 @@ ITerview
 
     @slot('content')
       <div class="form-group">
-        <label>Label</label>
+        <label>Le titre</label>
         <input type="text" name="add-label" value="" class="form-control" id="add-label">
         <span class="text-danger">
             <strong id="add-label-error"></strong>
         </span>
       </div>
       <div class="form-group">
-       <label>Topic</label>
+       <label>Le sujet</label>
        <select class="browser-default custom-select" name="add-topic" id="add-topic">
-        <option selected disabled>Select Topic</option>
+        <option selected disabled>Choisissez un sujet</option>
         @foreach($topics as $topic )
         <option value="{{$topic->id}}">{{$topic->label}}</option>
         @endforeach
@@ -141,10 +141,10 @@ ITerview
       </span>
       </div>
       <div class="form-group">
-       <label>Image</label>
+       <label>L'image</label>
         <div class="custom-file">
             <input type="file" name="image" class="custom-file-input" id="add-image">
-            <label class="custom-file-label" for="image">Choose Image</label>
+            <label class="custom-file-label" for="image">Choisissez l'image</label>
         </div>
         <span class="text-danger">
               <strong id="add-image-error"></strong>
@@ -153,11 +153,11 @@ ITerview
     @endslot
 
     @slot('cancel')
-        Cancel
+        Annuler
     @endslot
 
     @slot('confirm')
-        Add
+        Ajouter
     @endslot
 
     @slot('submitId')
@@ -216,7 +216,7 @@ $(document).ready(function() {
         language: {
             "lengthMenu": "Afficher _MENU_ éléments",
             "sInfo":"Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
-            "zeroRecords": "Aucun élements",
+            "zeroRecords": "Aucun élement",
             "search": "Rechercher",
             "oPaginate": {
                 "sNext":     "Suivant",

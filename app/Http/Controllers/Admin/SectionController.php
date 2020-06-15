@@ -51,7 +51,7 @@ class SectionController extends Controller
                 <button
                 data-id="' . $section->id .'"
                 class="delete dropdown-item">Supprimer</button>
-                <a class="dropdown-item" href="' . $url .'?section_id=' . $section->id .'">Questions</a>
+                <a class="dropdown-item" href="' . $url .'?section_id=' . $section->id .'">Les questions</a>
                 </div>
             </div>';
         })

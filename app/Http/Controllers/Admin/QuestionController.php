@@ -47,10 +47,10 @@ class QuestionController extends Controller
                     <button
                     data-id="' . $question->id . '"
                     data-type="' . $question->type . '"
-                    class="edit dropdown-item">Edit</button>
+                    class="edit dropdown-item">Modifier</button>
                     <button
                     data-id="' . $question->id .'"
-                    class="delete dropdown-item">Delete</button>
+                    class="delete dropdown-item">Supprimer</button>
                 </div>
             </div>';
         })

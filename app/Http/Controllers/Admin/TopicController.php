@@ -43,7 +43,7 @@ class TopicController extends Controller
                 <button
                 data-id="' . $topic->id .'"
                 class="delete dropdown-item">Supprimer</button>
-                <a class="dropdown-item" href="' . $url .'?topic_id=' . $topic->id .'">Sections</a>
+                <a class="dropdown-item" href="' . $url .'?topic_id=' . $topic->id .'">Les élements</a>
                 </div>
             </div>';
         })
