@@ -732,9 +732,6 @@ $(document).ready(function() {
   }
     
 });
-function qsa(sel) {
-    return Array.apply(null, document.querySelectorAll(sel));
-}
 function get(name){
    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
       return decodeURIComponent(name[1]);

@@ -169,17 +169,17 @@ ITerview
 <div class="card">
   <!-- Card header -->
   <div class="card-header border-0">
-    <h3 class="mb-0">List of Sections</h3>
-    <button class="btn btn-primary btn-sm float-right add">ADD</button>
+    <h3 class="mb-0">La Liste des élements</h3>
+    <button class="btn btn-primary btn-sm float-right add">Ajouter un élement</button>
   </div>
   <!-- Light table -->
   <div class="table-responsive">
     <table class="table align-items-center table-flush" id="sectionsTable">
       <thead class="thead-light">
         <tr>
-          <th scope="col">Section</th>
-          <th scope="col">Topic</th>
-          <th scope="col">Actions</th>
+          <th scope="col">L'élement</th>
+          <th scope="col">Le Sujet</th>
+          <th scope="col">Les actions</th>
         </tr>
       </thead>
       <tbody class="list">
@@ -213,6 +213,16 @@ $(document).ready(function() {
     const table = $('#sectionsTable').DataTable({
         processing: true,
         serverSide: true,
+        language: {
+            "lengthMenu": "Afficher _MENU_ éléments",
+            "sInfo":"Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+            "zeroRecords": "Aucun élements",
+            "search": "Rechercher",
+            "oPaginate": {
+                "sNext":     "Suivant",
+                "sPrevious": "Précédent"
+    },
+        },
         ajax: {
           url: "{{route('ajax.sections')}}",
           type:'GET',

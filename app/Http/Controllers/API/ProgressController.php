@@ -81,7 +81,7 @@ class ProgressController extends ResponseController
             foreach($section_id as $key=>$value){
                 $object = new \stdClass;
                 $object->section_id=$value;
-                $object->progress=Progress::select('score','created_at','time','mode')->where('section_id',$value)->get();
+                $object->progress=Progress::select('score','created_at','time','mode')->where('section_id',$value)->where('user_id',$user->id)->get();
             }
             $result[]=$object;
         }

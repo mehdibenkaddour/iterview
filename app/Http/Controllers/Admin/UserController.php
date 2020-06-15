@@ -31,10 +31,10 @@ class UserController extends Controller
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                 <button
                 data-id="' . $user->id . '"
-                class="edit dropdown-item">Edit</button>
+                class="edit dropdown-item">Modifier</button>
                 <button
                 data-id="' . $user->id .'"
-                class="delete dropdown-item">Delete</button>
+                class="delete dropdown-item">Supprimer</button>
                 </div>
             </div>';
         })

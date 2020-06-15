@@ -10,7 +10,7 @@ ITerview
 
 @component('admin.helpers.modal')
     @slot('title')
-        Delete alert
+        Supprimer l'utilisateur
     @endslot
     
     @slot('modalId')
@@ -26,15 +26,15 @@ ITerview
     @endslot
 
     @slot('content')
-    Are you sure you wan't to delete this user
+    Voulez-vous vraiment supprimer cet utilisateur !
     @endslot
 
     @slot('cancel')
-    Cancel
+    Annuler
     @endslot
 
     @slot('confirm')
-    Yes, delete
+    Oui, supprimer
     @endslot
     @slot('submitId')
     deleteBtn
@@ -46,7 +46,7 @@ ITerview
 
 @component('admin.helpers.modal')
     @slot('title')
-    Edit user
+    Modifier l'utilisateur
     @endslot
 
     @slot('modalId')
@@ -63,7 +63,7 @@ ITerview
 
     @slot('content')
       <div class="form-group">
-        <label>Name</label>
+        <label>Nom et prénom</label>
         <input type="text" name="name" value="" class="form-control" id="name">
         <span class="text-danger">
         <strong id="name-error"></strong>
@@ -80,7 +80,7 @@ ITerview
       </div>
       
       <div class="form-group">
-        <label>Role</label>
+        <label>Le role</label>
         <select name="usertype" class="form-control" id="role">
           <option value="user">User</option>
           <option value="admin">Admin</option>
@@ -89,11 +89,11 @@ ITerview
     @endslot
 
     @slot('cancel')
-        Cancel
+        Annuler
     @endslot
 
     @slot('confirm')
-        Update
+        Modifier
     @endslot
 
     @slot('submitId')
@@ -106,17 +106,17 @@ ITerview
 <div class="card">
   <!-- Card header -->
   <div class="card-header border-0">
-    <h3 class="mb-0">List of users</h3>
+    <h3 class="mb-0">La liste des utilisateurs</h3>
   </div>
   <!-- Light table -->
   <div class="table-responsive">
     <table class="table align-items-center " id="myTable">
       <thead class="thead-light">
         <tr>
-          <th scope="col" class="sort">Full Name</th>
+          <th scope="col" class="sort">Nom et prénom</th>
           <th scope="col" class="sort">Email</th>
-          <th scope="col">Role</th>
-          <th scope="col" class="sort">Actions</th>
+          <th scope="col">Le role</th>
+          <th scope="col" class="sort">Les actions</th>
         </tr>
       </thead>
       <tbody class="list">
@@ -146,6 +146,16 @@ $(document).ready(function() {
     const table = $('#myTable').DataTable({
         processing: true,
         serverSide: true,
+        language: {
+            "lengthMenu": "Afficher _MENU_ éléments",
+            "sInfo":"Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+            "zeroRecords": "Aucun utilisateurs",
+            "search": "Rechercher",
+            "oPaginate": {
+                "sNext":     "Suivant",
+                "sPrevious": "Précédent"
+    },
+        },
         ajax: '{!! route('ajax.users') !!}',
         columns: [
             { data: 'name', name: 'name' },

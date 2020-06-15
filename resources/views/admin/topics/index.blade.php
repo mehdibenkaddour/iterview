@@ -7,7 +7,7 @@ ITerview
 @section('content')
 @component('admin.helpers.modal')
     @slot('title')
-        Delete alert
+        Supprimer le sujet
     @endslot
     
     @slot('modalId')
@@ -23,15 +23,15 @@ ITerview
     @endslot
 
     @slot('content')
-    Are you sure you wan't to delete this topic
+    Voulez-vous vraiment supprimer ce sujet !
     @endslot
 
     @slot('cancel')
-    Cancel
+    Annuler
     @endslot
 
     @slot('confirm')
-    Yes, delete
+    Oui, supprimer
     @endslot
 
     @slot('submitId')
@@ -44,7 +44,7 @@ ITerview
 
 @component('admin.helpers.modal')
     @slot('title')
-    Edit topic
+    Modifier le sujet
     @endslot
 
     @slot('modalId')
@@ -61,17 +61,17 @@ ITerview
 
     @slot('content')
       <div class="form-group">
-        <label>Label</label>
+        <label>Le titre</label>
         <input type="text" name="label" value="" class="form-control" id="edit-label">
         <span class="text-danger">
             <strong id="edit-label-error"></strong>
         </span>
       </div>
       <div class="form-group">
-       <label>Image</label>
+       <label>L'image</label>
         <div class="custom-file">
             <input type="file" name="image" class="custom-file-input" id="edit-image">
-            <label class="custom-file-label" for="image">Choose Image</label>
+            <label class="custom-file-label" for="image">Choisissez l'image</label>
         </div>
         <span class="text-danger">
               <strong id="edit-image-error"></strong>
@@ -80,11 +80,11 @@ ITerview
     @endslot
 
     @slot('cancel')
-        Cancel
+        Annuler
     @endslot
 
     @slot('confirm')
-        Update
+        Modifier
     @endslot
 
     @slot('submitId')
@@ -97,7 +97,7 @@ ITerview
 
 @component('admin.helpers.modal')
     @slot('title')
-    Add topic
+    Ajouter un sujet
     @endslot
 
     @slot('modalId')
@@ -114,17 +114,17 @@ ITerview
 
     @slot('content')
       <div class="form-group">
-        <label>Label</label>
+        <label>Le titre</label>
         <input type="text" name="label" value="" class="form-control" id="add-label">
         <span class="text-danger">
             <strong id="add-label-error"></strong>
         </span>
       </div>
       <div class="form-group">
-       <label>Image</label>
+       <label>L'image</label>
         <div class="custom-file">
             <input type="file" name="image" class="custom-file-input" id="add-image">
-            <label class="custom-file-label" for="image">Choose Image</label>
+            <label class="custom-file-label" for="image">Choisissez l'image</label>
         </div>
         <span class="text-danger">
               <strong id="add-image-error"></strong>
@@ -133,11 +133,11 @@ ITerview
     @endslot
 
     @slot('cancel')
-        Cancel
+        Annuler
     @endslot
 
     @slot('confirm')
-        Add
+        Ajouter
     @endslot
 
     @slot('submitId')
@@ -149,16 +149,16 @@ ITerview
 <div class="card">
   <!-- Card header -->
   <div class="card-header border-0">
-    <h3 class="mb-0">List of Topics</h3>
-    <button class="btn btn-primary btn-sm float-right add">ADD</button>
+    <h3 class="mb-0">La list des sujets</h3>
+    <button class="btn btn-primary btn-sm float-right add">Ajouter un sujet</button>
   </div>
   <!-- Light table -->
   <div class="table-responsive">
     <table class="table align-items-center table-flush" id="topicsTable">
       <thead class="thead-light">
         <tr>
-          <th scope="col">Topic</th>
-          <th scope="col">Actions</th>
+          <th scope="col">Le Sujet</th>
+          <th scope="col">Les actions</th>
         </tr>
       </thead>
       <tbody class="list table-hover">
@@ -189,6 +189,16 @@ $(document).ready(function() {
     const table = $('#topicsTable').DataTable({
         processing: true,
         serverSide: true,
+        language: {
+            "lengthMenu": "Afficher _MENU_ éléments",
+            "sInfo":"Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+            "zeroRecords": "Aucun sujets",
+            "search": "Rechercher",
+            "oPaginate": {
+                "sNext":     "Suivant",
+                "sPrevious": "Précédent"
+    },
+        },
         ajax: '{!! route('ajax.topics') !!}',
         columns: [
             { data: 'topic', name: 'topic' },

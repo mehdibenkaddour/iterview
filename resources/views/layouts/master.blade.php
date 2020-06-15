@@ -7,7 +7,7 @@
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>ITerview - Administration area</title>
+  <title>ITerview - Espace d'administration</title>
   <!-- Favicon -->
   <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
   <!-- Fonts -->
@@ -53,37 +53,31 @@
             <li class="nav-item">
               <a class="nav-link {{ 'admin' == request()->path() ? 'active' : ''}}" href="{{ route('admin') }}">
                 <i class="ni ni-tv-2 text-primary"></i>
-                <span class="nav-link-text">Dashboard</span>
+                <span class="nav-link-text">Tableau de bord</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ 'users' == request()->path() ? 'active' : ''}}" href="{{ route('users') }}">
                 <i class="ni ni-single-02 text-orange"></i>
-                <span class="nav-link-text">App users</span>
+                <span class="nav-link-text">Les utilisateurs d'application</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ 'topics' == request()->path() ? 'active' : ''}}" href="{{route('topics.index')}}">
                 <i class="ni ni-collection text-primary"></i>
-                <span class="nav-link-text">Topics</span>
+                <span class="nav-link-text">Les sujets</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ 'sections' == request()->path() ? 'active' : ''}}" href="{{route('sections.index')}}">
                 <i class="ni ni-single-copy-04 text-yellow"></i>
-                <span class="nav-link-text">Sections</span>
+                <span class="nav-link-text">Les Sections</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ 'questions' == request()->path() ? 'active' : ''}}" href="{{route('questions.index')}}">
                 <i class="ni ni-bullet-list-67 text-default"></i>
-                <span class="nav-link-text">Questions</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <i class="ni ni-ungroup text-info"></i>
-                <span class="nav-link-text">Quizzes</span>
+                <span class="nav-link-text">Les questions</span>
               </a>
             </li>
           </ul>
@@ -91,14 +85,14 @@
           <hr class="my-3">
           <!-- Heading -->
           <h6 class="navbar-heading p-0 text-muted">
-            <span class="docs-normal">Data</span>
+            <span class="docs-normal">Les données</span>
           </h6>
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
               <a class="nav-link" href="#" target="_blank">
                 <i class="ni ni-chart-bar-32"></i>
-                <span class="nav-link-text">Statistics</span>
+                <span class="nav-link-text">Les statistiques</span>
               </a>
             </li>
           </ul>
