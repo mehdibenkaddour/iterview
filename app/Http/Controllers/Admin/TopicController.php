@@ -30,6 +30,7 @@ class TopicController extends Controller
 
         // add actions collumn
         ->addColumn('actions', function (Topic $topic) {
+            $url=route('sections.index');
             return '
             <div class="dropdown">
                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,7 +43,7 @@ class TopicController extends Controller
                 <button
                 data-id="' . $topic->id .'"
                 class="delete dropdown-item">Delete</button>
-                <a class="dropdown-item" href="http://127.0.0.1:8000/sections?topic_id=' . $topic->id .'">Sections</a>
+                <a class="dropdown-item" href="' . $url .'?topic_id=' . $topic->id .'">Sections</a>
                 </div>
             </div>';
         })
