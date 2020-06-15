@@ -223,7 +223,7 @@ $(document).ready(function() {
       $('#edit-form').attr('action', '{{url("/topics")}}'+ '/' + topicId);
 
       // fill inputs with data
-      const label = $(this).parent().siblings('td').first().find('span')[0].innerHTML;
+      const label = $(this).parents().eq(2).siblings('td').first().find('span')[0].innerHTML;
 
       $('#edit-label').val(label);
       $('#edit-label-error').html('');

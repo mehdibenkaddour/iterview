@@ -400,12 +400,18 @@ $(document).ready(function() {
   handleQuestionsAdd();
 
   function handleQuestionsLoad() {
-    
-    // Datatables config
-    const table = $('#questionsTable').DataTable({
+    console.log(get('section_id'));
+      const table = $('#questionsTable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{!! route('ajax.questions') !!}',
+        ajax: {
+          url: "{{route('ajax.questions')}}",
+          type:'GET',
+          data: function (d) {
+          d.section_id = get('section_id');
+          }
+
+        },
         columns: [
             { data: 'question', name: 'question'},
             { data: 'type', name: 'type'},
@@ -415,7 +421,8 @@ $(document).ready(function() {
         ]
     });
 
-    return table;
+    return table
+
   }
 
   function handleQuestionsDelete() {
@@ -727,6 +734,10 @@ $(document).ready(function() {
 });
 function qsa(sel) {
     return Array.apply(null, document.querySelectorAll(sel));
+}
+function get(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
 }
 </script>
 

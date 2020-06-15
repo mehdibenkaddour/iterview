@@ -23,3 +23,8 @@ table.dataTable thead .sorting:after {
     color: #000810;
     background-color: #f6f9fc;
 }
+
+.dropdown-item:focus,.dropdown-item:active{
+    outline: none !important;
+    box-shadow: none;
+}

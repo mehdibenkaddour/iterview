@@ -28,18 +28,31 @@ class QuestionController extends Controller
      * This method is for ajax only
      */
     public function ajaxQuestions() {
-        return Datatables::of(Question::query())
+        $questionQuery=Question::query();
+        $section_id = (!empty($_GET["section_id"])) ? ($_GET["section_id"]) : ('');
+        if($section_id){
+            $questionQuery->whereRaw("questions.section_id = '" . $section_id . "'");
+        }
+        $questions=$questionQuery->select('*');
+        return Datatables::of($questions)
 
         // add actions collumn
         ->addColumn('actions', function (Question $question) {
             return '
-            <button
-                data-id="' . $question->id . '"
-                data-type="' . $question->type . '"
-                class="btn btn-success btn-sm edit">Edit</button>
-            <button
-                data-id="' . $question->id .'"
-                class="btn btn-danger btn-sm delete">Delete</button>';
+            <div class="dropdown">
+                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                    <button
+                    data-id="' . $question->id . '"
+                    data-type="' . $question->type . '"
+                    class="edit dropdown-item">Edit</button>
+                    <button
+                    data-id="' . $question->id .'"
+                    class="delete dropdown-item">Delete</button>
+                </div>
+            </div>';
         })
 
         ->addColumn('question', function (Question $question) {
@@ -62,10 +75,10 @@ class QuestionController extends Controller
             ';
         })
 
-        ->addColumn('topic', function(Question $question) {
+        ->addColumn('section', function(Question $question) {
             return $question->section->topic->label;
         })
-        ->addColumn('section', function(Question $question) {
+        ->addColumn('topic', function(Question $question) {
             return $question->section->label;
         })
         
@@ -74,6 +87,9 @@ class QuestionController extends Controller
 
         ->toJson();
     }
+    /* methode for geting questions of specifique section
+    */
+
     /*
      this method for geting section of topics used in dynamic dropdown menu 
     */

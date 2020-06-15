@@ -31,12 +31,20 @@ class TopicController extends Controller
         // add actions collumn
         ->addColumn('actions', function (Topic $topic) {
             return '
-            <button
+            <div class="dropdown">
+                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                <button
                 data-id="' . $topic->id . '"
-                class="btn btn-success btn-sm edit">Edit</button>
-            <button
+                class="edit dropdown-item">Edit</button>
+                <button
                 data-id="' . $topic->id .'"
-                class="btn btn-danger btn-sm delete">Delete</button>';
+                class="delete dropdown-item">Delete</button>
+                <a class="dropdown-item" href="http://127.0.0.1:8000/sections?topic_id=' . $topic->id .'">Sections</a>
+                </div>
+            </div>';
         })
 
         ->addColumn('topic', function (Topic $topic) {

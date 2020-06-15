@@ -27,7 +27,13 @@ class ProgressController extends ResponseController
      */
     public function store(Request $request)
     {
-        $progress= Progress::create($request->all());
+        $progress= new Progress();
+        $progress->user_id=$request->user_id;
+        $progress->section_id=$request->section_id;
+        $progress->score=$request->score;
+        $progress->time=$request->time;
+        $progress->mode=$request->mode;
+        $progress->save();
         return $this->sendResponse([
             'message' => 'ressource has been successful stored',
         ]);
@@ -69,7 +75,16 @@ class ProgressController extends ResponseController
     
     public function progress(Request $request){
         $user = $request->user();
-        $progresses= Progress::select('section_id','score','created_at')->where('user_id',$user->id)->orderBy('created_at','asc')->get();
-        return $this->sendResponse($progresses);
+        $result = [];
+        $arrayOfSection=Progress::select('section_id')->where('user_id',$user->id)->distinct('section_id')->get()->toArray();
+        foreach($arrayOfSection as $section_id){
+            foreach($section_id as $key=>$value){
+                $object = new \stdClass;
+                $object->section_id=$value;
+                $object->progress=Progress::select('score','created_at','time','mode')->where('section_id',$value)->get();
+            }
+            $result[]=$object;
+        }
+        return $this->sendResponse($result);
     }
 }

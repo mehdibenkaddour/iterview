@@ -182,9 +182,9 @@ $(document).ready(function() {
         $('#edit-form').attr('action', '{{url("/users")}}'+ "/" + userId);
 
         // fill inputs with data
-        const name = $(this).parent().siblings('td')[0].innerText;
-        const email = $(this).parent().siblings('td')[1].innerText;
-        const role = $(this).parent().siblings('td')[2].innerText;
+        const name = $(this).parents().eq(2).siblings('td')[0].innerText;
+        const email = $(this).parents().eq(2).siblings('td')[1].innerText;
+        const role = $(this).parents().eq(2).siblings('td')[2].innerText;
 
         $('#name').val(name);
         $('#email').val(email);

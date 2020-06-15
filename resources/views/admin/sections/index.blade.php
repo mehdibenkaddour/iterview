@@ -213,7 +213,14 @@ $(document).ready(function() {
     const table = $('#sectionsTable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{!! route('ajax.sections') !!}',
+        ajax: {
+          url: "{{route('ajax.sections')}}",
+          type:'GET',
+          data: function (d) {
+          d.topic_id = get('topic_id');
+          }
+
+        },
         columns: [
             { data: 'section', name: 'section' },
             { data: 'topic', name: 'topic'},
@@ -253,8 +260,8 @@ $(document).ready(function() {
       });
 
       // fill inputs with data
-      const label = $(this).parent().siblings('td').first()[0].innerText;
-      const topic = $(this).parent().siblings('td')[1].innerText;
+      const label = $(this).parents().eq(2).siblings('td').first()[0].innerText;
+      const topic = $(this).parents().eq(2).siblings('td')[1].innerText;
 
       $('#edit-label').val(label);
       $( '#edit-label-error' ).html( "" );
@@ -381,7 +388,10 @@ $(document).ready(function() {
   }
     
 });
-
+function get(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
+}
 </script>
 
 @endsection

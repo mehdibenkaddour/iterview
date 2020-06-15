@@ -490,8 +490,8 @@
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
 
   <!-- Code editor -->
-  <script src="lib/codemirror.js"></script>
-  <script src="mode/javascript/javascript.js"></script>
+  <script src="http://127.0.0.1:8000/lib/codemirror.js"></script>
+  <script src="http://127.0.0.1:8000/mode/javascript/javascript.js"></script>
 
   <!-- Custom scripts -->
   @yield('scripts')
