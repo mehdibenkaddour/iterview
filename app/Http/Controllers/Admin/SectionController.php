@@ -33,12 +33,11 @@ class SectionController extends Controller
         if($topic_id){
             $sectionQuery->whereRaw("sections.topic_id = '" . $topic_id . "'");
         }
-        $sections=$sectionQuery->select('*');
+        $sections=$sectionQuery->latest('created_at')->select('*');
         return Datatables::of($sections)
 
         // add actions collumn
         ->addColumn('actions', function (Section $section) {
-            $url=route('questions.index');
             return '
             <div class="dropdown">
                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,19 +50,19 @@ class SectionController extends Controller
                 <button
                 data-id="' . $section->id .'"
                 class="delete dropdown-item">Supprimer</button>
-                <a class="dropdown-item" href="' . $url .'?section_id=' . $section->id .'">Les questions</a>
                 </div>
             </div>';
         })
 
         ->addColumn('section', function (Section $section) {
+            $url=route('questions.index');
             return '
             <div class="media align-items-center">
                 <a href="#" class="avatar rounded-circle mr-3">
                     <img alt="Image placeholder" src="/uploads/sections/' . $section->image . '">
                 </a>
                 <div class="media-body">
-                  <span class="name mb-0 text-sm" id="sectionLabel">' . $section->label . '</span>
+                <a style="color: inherit" href="' . $url .'?section_id=' . $section->id .'"><span class="name mb-0 text-sm" id="sectionLabel">' . $section->label . '</span></a>
                 </div>
             </div>
             ';

@@ -26,11 +26,10 @@ class TopicController extends Controller
      * This method is for ajax only
      */
     public function ajaxTopics() {
-        return Datatables::of(Topic::query())
+        return Datatables::of(Topic::latest('created_at')->select('*'))
 
         // add actions collumn
         ->addColumn('actions', function (Topic $topic) {
-            $url=route('sections.index');
             return '
             <div class="dropdown">
                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -43,19 +42,19 @@ class TopicController extends Controller
                 <button
                 data-id="' . $topic->id .'"
                 class="delete dropdown-item">Supprimer</button>
-                <a class="dropdown-item" href="' . $url .'?topic_id=' . $topic->id .'">Les élements</a>
                 </div>
             </div>';
         })
 
         ->addColumn('topic', function (Topic $topic) {
+            $url=route('sections.index');
             return '
             <div class="media align-items-center">
                 <a href="#" class="avatar rounded-circle mr-3">
                     <img alt="Image placeholder" src="/uploads/topics/' . $topic->image . '">
                 </a>
                 <div class="media-body">
-                  <span class="name mb-0 text-sm" id="TopicLabel">' . $topic->label . '</span>
+                <a style="color: inherit" href="' . $url .'?topic_id=' . $topic->id .'"><span class="name mb-0 text-sm" id="TopicLabel">' . $topic->label . '</span></a>
                 </div>
             </div>
             ';

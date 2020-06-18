@@ -283,6 +283,65 @@ ITerview
 @endcomponent
 
 
+<!-- type 3 -->
+
+@component('admin.helpers.modal')
+    @slot('title')
+    Ajouter une question du troisiéme type
+    @endslot
+
+    @slot('modalId')
+    add-modal-3
+    @endslot
+
+    @slot('formId')
+    add-form-3
+    @endslot
+
+    @slot('method')
+    POST
+    @endslot
+
+    @slot('content')
+      <div class="form-group">
+          <label>La question</label>
+          <input type="text" name="add-question-3" value="" class="form-control" id="add-question-3">
+          <span class="text-danger">
+              <strong id="add-question-error-3"></strong>
+          </span>
+      </div>
+      <div class="form-group">
+          <label for="code-3">Entrer le code <small>(optionnel)</small></label>
+          <textarea class="form-control" id="code-3" rows="3" name="code-3"></textarea>
+      </div>
+
+      <div class="form-group" id="answers-3">
+          <label>La réponse</label>
+          <div class="input-group">
+              <input type="text" class="form-control" aria-label="Text input with radio button" id="answer-3" required>
+          </div>
+      <span class="text-danger">
+                <strong id="add-answer-error-3"></strong>
+      </span>
+      </div>
+
+    @endslot
+
+    @slot('cancel')
+        Annuler
+    @endslot
+
+    @slot('confirm')
+        Ajouter
+    @endslot
+
+    @slot('submitId')
+      addBtn-3
+    @endslot
+
+@endcomponent
+
+
 
 
 
@@ -334,6 +393,7 @@ ITerview
         <option selected disabled value="">Choisissez Le type de la question</option>
         <option value="1">La question avec code</option>
         <option value="2">La question avec image</option>
+        <option value="3">Guess the output</option>
       </select>
       </div>
       </div>
@@ -390,6 +450,13 @@ $(document).ready(function() {
             lineNumbers: true,
             indentUnit: 4
         });
+  const textArea= document.getElementById("code-3");
+  const codeMirror=CodeMirror.fromTextArea(textArea,{
+    mode: "javascript",
+            theme: "material-darker",
+            lineNumbers: true,
+            indentUnit: 4
+  });
   const table = handleQuestionsLoad();
 
   handleQuestionsDelete();
@@ -399,7 +466,6 @@ $(document).ready(function() {
   handleQuestionsAdd();
 
   function handleQuestionsLoad() {
-    console.log(get('section_id'));
       const table = $('#questionsTable').DataTable({
         processing: true,
         serverSide: true,
@@ -417,6 +483,7 @@ $(document).ready(function() {
           url: "{{route('ajax.questions')}}",
           type:'GET',
           data: function (d) {
+          d.search=(".dataTables_filter input[type=search]").value;
           d.section_id = get('section_id');
           }
 
@@ -618,7 +685,7 @@ $(document).ready(function() {
                 }});
 
             });
-          }else{
+          }else if($('#add-type').val()==2){
             $('#add-form-2').attr('action','{{url("/questions")}}');
 
             $( '#add-question-error-2' ).html( "" );
@@ -712,6 +779,60 @@ $(document).ready(function() {
                 }});
 
             });
+          }else{
+            $('#add-form-3').attr('action','{{url("/questions")}}');
+
+            $( '#add-question-error-3' ).html( "" );
+            // clear inputs
+            $('#add-question-3').val('');
+            $("#answer-3").value="";
+            codeMirror.setValue("");
+            codeMirror.refresh();
+            // show the modal
+            $('#add-modal-3').modal('show'); 
+
+            $('#add-form-3').unbind('submit').submit(function(e){
+                // turn button into loading state
+                iterview.handleButtonLoading(true, '#addBtn-3');
+                const urlForm= $(this).attr('action');
+                e.preventDefault();
+                $('#add-question-error-3').html( "" );
+                $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: urlForm,
+                method: 'POST',
+                data: {
+                    content: $('#add-question-3').val(),
+                    topic: $('#add-topic-1').val(),
+                    section: $('#add-section-1').val(),
+                    type:3,
+                    correct_answer:$("#answer-3").val(),
+                    code:$("#code-3").val(),
+                },
+                success: function(result){
+                    // turn button into default state
+                    iterview.handleButtonLoading(false, '#addBtn-3');
+                    if(result.errors)
+                    {
+                      if(result.errors.content && result.errors.correct_answers){
+                        $( '#add-answer-error-3' ).html( "" );
+                        $('#add-form-3').find('#add-question-error-3').html(result.errors.content[0]);
+                      }else if(result.errors.correct_answer){
+                         $( '#add-question-error-3' ).html( "" );
+                         $('#add-form-3').find('#add-answer-error-3').html(result.errors.correct_answer[0]);
+                       }else{
+                         $( '#add-answer-error-3' ).html( "" );
+                         $('#add-form-3').find('#add-question-error-3').html(result.errors.content[0]);
+                       }
+                    }
+                    else{
+                        iterview.handleSuccessResponse(table, result, '#add-modal-3');
+                    }
+                }});
+
+            });
+            
+
           }
         })
     });
