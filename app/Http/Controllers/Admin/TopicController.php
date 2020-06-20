@@ -46,6 +46,15 @@ class TopicController extends Controller
             </div>';
         })
 
+        ->addColumn('code', function (Topic $topic) {
+            return '
+            <div class="media align-items-center">
+                <div class="media-body">
+                  <span class="name mb-0 text-sm" id="sectionLabel">' . $topic->code . '</span>
+                </div>
+            </div>';
+        })
+
         ->addColumn('topic', function (Topic $topic) {
             $url=route('sections.index');
             return '
@@ -61,7 +70,7 @@ class TopicController extends Controller
         })
         
         // to interpret html and not considering it as text
-        ->rawColumns(['actions', 'topic'])
+        ->rawColumns(['actions','topic','code'])
 
         ->toJson();
     }
@@ -96,6 +105,7 @@ class TopicController extends Controller
         $topic = new Topic();
 
         $topic->label=$request->input('label');
+        $topic->code=$this->random_strings(8);
 
         if($request->hasfile('image')) {
             $file=$request->file('image');
@@ -186,4 +196,15 @@ class TopicController extends Controller
 
         return redirect('topics');
     }
+    private function random_strings($length_of_string) 
+    { 
+  
+        // String of all alphanumeric character 
+        $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'; 
+  
+        // Shufle the $str_result and returns substring 
+        // of specified length 
+        return substr(str_shuffle($str_result),  
+                       0, $length_of_string); 
+    } 
 }

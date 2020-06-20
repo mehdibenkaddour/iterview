@@ -158,6 +158,7 @@ ITerview
       <thead class="thead-light">
         <tr>
           <th scope="col">Le Sujet</th>
+          <th scope="col">Le code d'accés</th>
           <th scope="col">Les actions</th>
         </tr>
       </thead>
@@ -202,6 +203,7 @@ $(document).ready(function() {
         ajax: '{!! route('ajax.topics') !!}',
         columns: [
             { data: 'topic', name: 'topic' },
+            { data: 'code', name: 'code' },
             { data: 'actions', name: 'actions' }
         ]
     });
