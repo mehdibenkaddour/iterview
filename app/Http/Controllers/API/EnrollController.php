@@ -44,9 +44,7 @@ class EnrollController extends ResponseController
         $topic=Topic::where('code','=',$request->code_access)->first();
         $user=Enroll::where('user_id','=',$request->user()->id);
         if($user){
-            return $this->sendResponse([
-                'message' => 'you already enroll this module',
-            ]);
+            return $this->sendError("ALREADY_ENROLLED");
         }else{
             if($topic){
                 if($topic->enable){
@@ -54,7 +52,7 @@ class EnrollController extends ResponseController
                     $enroll->topic_id=$topic->id;
                     $enroll->save();
                     return $this->sendResponse([
-                        'message' => 'you have been successfully enroll the module',
+                        'message' => 'ENROLLED_SUCCESS',
                     ]);
                 }else{
                     return $this->sendError("MODULE_DISABLED", 403);
