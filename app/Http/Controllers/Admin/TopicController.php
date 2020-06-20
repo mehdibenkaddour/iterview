@@ -106,6 +106,7 @@ class TopicController extends Controller
 
         $topic->label=$request->input('label');
         $topic->code=$this->random_strings(8);
+        $topic->enable=true;
 
         if($request->hasfile('image')) {
             $file=$request->file('image');

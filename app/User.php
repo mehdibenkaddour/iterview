@@ -40,4 +40,7 @@ class User extends Authenticatable
     public function progresses(){
         return $this->hasMany('App\Models\Progress');
     }
+    public function enrolls(){
+        return $this->hasMany('App\Models\Enroll');
+    }
 }

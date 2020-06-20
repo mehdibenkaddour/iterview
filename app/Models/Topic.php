@@ -18,4 +18,7 @@ class Topic extends Model
     {
         return $this->hasMany('App\Models\Section');
     }
+    public function enrolls(){
+        return $this->hasMany('App\Models\Enroll');
+    }
 }
